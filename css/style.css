@@ -20,7 +20,7 @@ body {
 
     max-width: 760px;
 
-    margin: auto;
+    margin: 40px auto;
 
     background: rgba(255, 255, 255, .97);
 
@@ -44,7 +44,7 @@ img {
     border-radius: 12px;
 
     box-shadow:
-        0 12px 30px rgba(0, 0, 0, .25);
+        0 8px 25px rgba(0, 0, 0, .18);
 
     animation: showImage 1.5s ease;
 
@@ -62,7 +62,7 @@ img:hover {
 
 .grade {
 
-    margin-top: 25px;
+    margin-top: 18px;
 
     font-size: 28px;
 
@@ -72,7 +72,7 @@ img:hover {
 
 .name {
 
-    margin-top: 10px;
+    margin-top: 5px;
 
     font-size: 56px;
 
@@ -101,19 +101,25 @@ img:hover {
 
 .title {
 
-    font-size: 28px;
+    font-size: 30px;
 
-    font-weight: bold;
+    font-weight: 700;
+
+    letter-spacing: -1px;
+
+    margin-bottom: 25px;
 
 }
 
 .info {
 
-    margin-top: 25px;
+    margin-top: 20px;
 
-    font-size: 24px;
+    font-size: 22px;
 
-    line-height: 2;
+    line-height: 1.9;
+
+    color: #444;
 
 }
 
@@ -127,7 +133,7 @@ img:hover {
 
     border-radius: 15px;
 
-    padding: 35px;
+    padding: 30px 35px;
 
     box-shadow:
         0 5px 15px rgba(0, 0, 0, .08);
@@ -142,19 +148,23 @@ img:hover {
 
 .label {
 
-    font-size: 26px;
+    font-size: 24px;
 
     font-weight: bold;
+
+    color: #333;
 
 }
 
 .value {
 
-    margin-top: 15px;
+    margin-top: 12px;
 
-    margin-left: 15px;
+    margin-left: 10px;
 
-    font-size: 22px;
+    font-size: 21px;
+
+    color: #666;
 
 }
 
@@ -162,9 +172,19 @@ hr {
 
     border: none;
 
-    border-top: 1px solid #dddddd;
+    border-top: 1px solid #e8e1d6;
 
-    margin: 30px 0;
+    margin: 25px 0;
+
+}
+
+.version {
+
+    margin-top: 45px;
+
+    font-size: 14px;
+
+    color: #999;
 
 }
 
