@@ -1,0 +1,150 @@
+body{
+
+    margin:0;
+
+    background:
+        linear-gradient(
+            180deg,
+            #172033,
+            #263248,
+            #172033);
+
+    font-family:"Malgun Gothic",sans-serif;
+
+    text-align:center;
+
+    color:white;
+
+}
+
+h1{
+
+    margin-top:30px;
+
+    font-size:52px;
+
+    letter-spacing:-2px;
+
+}
+
+.subtitle{
+
+    font-size:24px;
+
+    color:#d6d6d6;
+
+    margin-bottom:35px;
+
+}
+
+.map{
+
+    width:1400px;
+
+    margin:auto;
+
+    position:relative;
+
+}
+
+.world{
+
+    width:100%;
+
+    display:block;
+
+    border-radius:18px;
+
+    box-shadow:
+        0 15px 40px rgba(0,0,0,.45);
+
+}
+
+.spot{
+
+    position:absolute;
+
+    transition:.25s;
+
+}
+
+.spot img{
+
+    width:110px;
+
+}
+
+.spot:hover{
+
+    transform:
+        translateY(-6px)
+        scale(1.08);
+
+    filter:
+        drop-shadow(0 0 20px rgba(255,220,100,.9));
+
+}
+
+.spot1{
+
+    left:160px;
+
+    top:115px;
+
+}
+
+.spot2{
+
+    left:650px;
+
+    top:90px;
+
+}
+
+.spot3{
+
+    right:178px;
+
+    top:160px;
+
+}
+
+.spot4{
+
+    left:163px;
+
+    top:400px;
+
+}
+
+.spot5{
+
+    left:615px;
+
+    top:370px;
+
+}
+
+.spot6{
+
+    right:200px;
+
+    top:420px;
+
+}
+
+.spot7{
+
+    left:290px;
+
+    bottom:140px;
+
+}
+
+.spot8{
+
+    right:340px;
+
+    bottom:130px;
+
+}
