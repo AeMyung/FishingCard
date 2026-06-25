@@ -82,6 +82,48 @@ img:hover {
 
 }
 
+/* 일반 */
+.grade.common,
+.name.common {
+    color: #FFFFFF;
+}
+
+/* 고급 */
+.grade.uncommon,
+.name.uncommon {
+    color: #5FBF5F;
+}
+
+/* 희귀 */
+.grade.rare,
+.name.rare {
+    color: #3FA9F5;
+}
+
+/* 영웅 */
+.grade.epic,
+.name.epic {
+    color: #A335EE;
+}
+
+/* 전설 */
+.grade.legendary,
+.name.legendary {
+    color: #F7C843;
+}
+
+/* 유물 */
+.grade.relic,
+.name.relic {
+    color: #FF8C1A;
+}
+
+/* 고대 */
+.grade.ancient,
+.name.ancient {
+    color: #BBA689;
+}
+
 .info-box {
 
     margin-top: 45px;
@@ -175,16 +217,6 @@ hr {
     border-top: 1px solid #e8e1d6;
 
     margin: 25px 0;
-
-}
-
-.version {
-
-    margin-top: 45px;
-
-    font-size: 14px;
-
-    color: #999;
 
 }
 
