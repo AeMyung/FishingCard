@@ -1,0 +1,97 @@
+body{
+
+    margin:0;
+
+    background:#0c2340;
+
+    color:white;
+
+    font-family:sans-serif;
+
+}
+
+.container{
+
+    width:420px;
+
+    margin:50px auto;
+
+    text-align:center;
+
+}
+
+h1{
+
+    margin-bottom:40px;
+
+}
+
+#playerInfo{
+
+    margin-bottom:40px;
+
+    font-size:22px;
+
+}
+
+#nickname{
+
+    margin-bottom:10px;
+
+}
+
+#gold{
+
+    color:gold;
+
+    font-weight:bold;
+
+}
+
+.menu{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+
+}
+
+.menuBtn,
+.logoutBtn{
+
+    padding:16px;
+
+    border:none;
+
+    border-radius:12px;
+
+    font-size:22px;
+
+    text-decoration:none;
+
+    color:white;
+
+    background:#19477c;
+
+    cursor:pointer;
+
+    transition:.2s;
+
+}
+
+.menuBtn:hover,
+.logoutBtn:hover{
+
+    background:#2b66aa;
+
+}
+
+.logoutBtn{
+
+    margin-top:20px;
+
+    background:#8d3030;
+
+}
