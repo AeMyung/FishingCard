@@ -30,6 +30,7 @@ inventoryBtn.onclick = () => {
 const params = new URLSearchParams(window.location.search);
 const locationId = Number(params.get("location")) || 1;
 
+let isFishing = false;
 let failTimer;
 let fishingTimer;
 
@@ -82,7 +83,33 @@ function randomFish(location) {
 // 낚시 시작
 // ======================
 
-fishBtn.onclick = startFishing;
+fishBtn.onclick = () => {
+
+    if (isFishing) {
+
+        stopFishing();
+
+    } else {
+
+        startFishing();
+
+    }
+
+};
+
+function stopFishing() {
+
+    clearTimeout(fishingTimer);
+    clearTimeout(failTimer);
+
+    miniGame.style.display = "none";
+    message.style.display = "none";
+
+    isFishing = false;
+
+    fishBtn.innerHTML = "🎣 낚시하기";
+
+}
 
 // ======================
 // 미니게임 시작
@@ -128,7 +155,7 @@ async function successFishing() {
 
     catchCard.src = "../images/" + fish.id + ".png";
 
-    fishBtn.disabled = false;
+    isFishing = false;
     fishBtn.innerHTML = "🎣 낚시하기";
 
 }
@@ -145,7 +172,7 @@ function failFishing() {
 
     message.innerHTML = "❌<br><br>물고기를 놓쳤습니다.";
 
-    fishBtn.disabled = false;
+    isFishing = false;
     fishBtn.innerHTML = "🎣 낚시하기";
 
     setTimeout(() => {
@@ -166,9 +193,9 @@ closePopup.onclick = () => {
 
 function startFishing() {
 
-    fishBtn.disabled = true;
+    isFishing = true;
 
-    fishBtn.innerHTML = "🎣 낚시 중...";
+    fishBtn.innerHTML = "❌ 낚시 중단";
 
     message.style.display = "none";
 
