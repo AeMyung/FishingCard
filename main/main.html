@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <title>Loa Fishing</title>
+
+    <link rel="stylesheet" href="../css/mainstyle.css">
+
+</head>
+
+
+<body>
+
+    <h1>LostArk Fishing</h1>
+
+    <a id="logoutBtn" class="logout">
+
+        🚪 로그아웃
+
+    </a>
+
+    <p class="subtitle">
+        원하는 낚시터를 선택하세요.
+    </p>
+
+    <div class="map">
+
+        <img src="../images/world_map.png" class="world">
+
+        <!-- 엘가시아 -->
+        <a href="../map/location.html?location=1" class="spot spot1">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 슈샤이어 -->
+        <a href="../map/location.html?location=2" class="spot spot2">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 페이튼 -->
+        <a href="../map/location.html?location=3" class="spot spot3">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 림레이크 -->
+        <a href="../map/location.html?location=4" class="spot spot4">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 로헨델 -->
+        <a href="../map/location.html?location=5" class="spot spot5">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 아르데타인 -->
+        <a href="../map/location.html?location=6" class="spot spot6">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 파푸니카 -->
+        <a href="../map/location.html?location=7" class="spot spot7">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+        <!-- 루테란 -->
+        <a href="../map/location.html?location=8" class="spot spot8">
+            <img src="../images/fishing_spot.png">
+        </a>
+
+    </div>
+
+    <script>
+
+        const memberCode =
+            localStorage.getItem(
+                "member_code"
+            );
+
+        if (!memberCode) {
+
+            location.href =
+                "../login/login.html";
+
+        }
+
+    </script>
+
+    <script src="main.js"></script>
+
+</body>
+
+</html>
