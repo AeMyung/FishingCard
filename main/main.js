@@ -1,7 +1,9 @@
 const memberCode =
-    localStorage.getItem("member_code");
+    localStorage.getItem(
+        "member_code"
+    );
 
-if(!memberCode){
+if (!memberCode) {
 
     location.href =
         "../login/login.html";
@@ -15,15 +17,19 @@ const logoutBtn =
 
 logoutBtn.onclick = () => {
 
-    if(confirm("로그아웃 하시겠습니까?")){
-
-        localStorage.removeItem(
-            "member_code"
+    const ok =
+        confirm(
+            "로그아웃 하시겠습니까?"
         );
 
-        location.href =
-            "../login/login.html";
+    if (!ok) return;
 
-    }
+    localStorage.removeItem(
+        "member_code"
+    );
+
+    location.replace(
+        "../login/login.html"
+    );
 
 };

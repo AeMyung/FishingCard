@@ -1,4 +1,4 @@
-const supabase =
+const sb =
     window.supabase.createClient(
         SUPABASE_URL,
         SUPABASE_KEY
@@ -49,8 +49,7 @@ loginBtn.onclick = async () => {
     }
 
     const { data, error: dbError } =
-        await supabase
-
+        await sb
             .from("players")
 
             .select("*")
