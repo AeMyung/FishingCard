@@ -5,6 +5,10 @@ const sb = window.supabase.createClient(
 
 const memberCode = localStorage.getItem("member_code");
 
+if (!memberCode) {
+    location.href = "../login/login.html";
+}
+
 const fishBtn = document.getElementById("fishBtn");
 const miniGame = document.getElementById("miniGame");
 const message = document.getElementById("message");
@@ -180,56 +184,18 @@ function startFishing() {
 
 async function addFish(fishId) {
 
-    const { data, error } = await sb
+    console.log("member :", memberCode);
+    console.log("fish :", fishId);
+
+    const result = await sb
         .from("inventory")
-        .select("count")
-        .eq("member_code", memberCode)
-        .eq("fish_id", fishId)
-        .maybeSingle();
+        .insert({
+            member_code: memberCode,
+            fish_id: fishId,
+            count: 1
+        });
 
-    if (error) {
-
-        console.error(error);
-
-        return;
-
-    }
-
-    if (data) {
-
-        const { error: updateError } =
-            await sb
-                .from("inventory")
-                .update({
-                    count: data.count + 1
-                })
-                .eq("member_code", memberCode)
-                .eq("fish_id", fishId);
-
-        if (updateError) {
-
-            console.error(updateError);
-
-        }
-
-    } else {
-
-        const { error: insertError } =
-            await sb
-                .from("inventory")
-                .insert({
-                    member_code: memberCode,
-                    fish_id: fishId,
-                    count: 1
-                });
-
-        if (insertError) {
-
-            console.error(insertError);
-
-        }
-
-    }
+    console.log(result);
 
 }
 
