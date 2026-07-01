@@ -114,7 +114,7 @@ const FishData = [
 
         page: "can.html",
 
-        weight: 0
+        weight: 300
     },
 
     {
