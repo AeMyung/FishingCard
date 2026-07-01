@@ -184,18 +184,49 @@ function startFishing() {
 
 async function addFish(fishId) {
 
-    console.log("member :", memberCode);
-    console.log("fish :", fishId);
-
-    const result = await sb
+    const { data, error } = await sb
         .from("inventory")
-        .insert({
-            member_code: memberCode,
-            fish_id: fishId,
-            count: 1
-        });
+        .select("count")
+        .eq("member_code", memberCode)
+        .eq("fish_id", fishId)
+        .maybeSingle();
 
-    console.log(result);
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    if (data) {
+
+        // 이미 있으면 개수 증가
+        const { error: updateError } = await sb
+            .from("inventory")
+            .update({
+                count: data.count + 1
+            })
+            .eq("member_code", memberCode)
+            .eq("fish_id", fishId);
+
+        if (updateError) {
+            console.error(updateError);
+        }
+
+    } else {
+
+        // 처음 잡은 물고기면 INSERT
+        const { error: insertError } = await sb
+            .from("inventory")
+            .insert({
+                member_code: memberCode,
+                fish_id: fishId,
+                count: 1
+            });
+
+        if (insertError) {
+            console.error(insertError);
+        }
+
+    }
 
 }
 
