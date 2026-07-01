@@ -1,97 +1,147 @@
-body{
+body {
 
-    margin:0;
+    margin: 0;
 
-    background:#0c2340;
+    min-height: 100vh;
 
-    color:white;
+    display: flex;
 
-    font-family:sans-serif;
+    justify-content: center;
 
-}
+    align-items: center;
 
-.container{
+    background: url("../images/menubackground.png");
 
-    width:420px;
+    background-size: cover;
 
-    margin:50px auto;
+    background-position: center;
 
-    text-align:center;
-
-}
-
-h1{
-
-    margin-bottom:40px;
+    background-repeat: no-repeat;
 
 }
 
-#playerInfo{
+.container {
 
-    margin-bottom:40px;
+    width: 430px;
 
-    font-size:22px;
+    margin: 50px;
 
-}
+    padding: 35px;
 
-#nickname{
+    border-radius: 20px;
 
-    margin-bottom:10px;
+    background: rgba(20, 30, 50, .82);
 
-}
+    backdrop-filter: blur(10px);
 
-#gold{
-
-    color:gold;
-
-    font-weight:bold;
+    box-shadow: 0 0 30px rgba(0, 0, 0, .45);
 
 }
 
-.menu{
+h1 {
 
-    display:flex;
+    text-align: center;
 
-    flex-direction:column;
+    color: white;
 
-    gap:15px;
+    margin-bottom: 40px;
+
+    font-size: 48px;
+
+}
+
+#playerInfo {
+
+    margin-bottom: 40px;
+
+    font-size: 22px;
+
+}
+
+#nickname {
+
+    color: white;
+
+    font-size: 24px;
+
+    margin-top: 25px;
+
+}
+
+#gold {
+
+    color: gold;
+
+    font-weight: bold;
+
+}
+
+.menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
 
 }
 
 .menuBtn,
-.logoutBtn{
+.logoutBtn {
 
-    padding:16px;
+    padding: 16px;
 
-    border:none;
+    border: none;
 
-    border-radius:12px;
+    border-radius: 12px;
 
-    font-size:22px;
+    font-size: 22px;
 
-    text-decoration:none;
+    text-decoration: none;
 
-    color:white;
+    color: white;
 
-    background:#19477c;
+    background: #19477c;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
+    transition: .2s;
 
 }
 
 .menuBtn:hover,
-.logoutBtn:hover{
+.logoutBtn:hover {
 
-    background:#2b66aa;
+    background: #2b66aa;
 
 }
 
-.logoutBtn{
+.logoutBtn {
 
-    margin-top:20px;
+    margin-top: 20px;
 
-    background:#8d3030;
+    background: #8d3030;
+
+}
+
+.menuBtn {
+
+    background: rgba(40, 70, 120, .75);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 12px;
+
+    transition: .2s;
+
+}
+
+.menuBtn:hover {
+
+    background: rgba(70, 110, 180, .9);
+
+    transform: translateY(-2px);
 
 }
