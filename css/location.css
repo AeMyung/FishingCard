@@ -153,3 +153,80 @@ body{
     font-weight:bold;
 
 }
+
+#catchPopup{
+
+    display:none;
+
+    position:absolute;
+
+    left:50%;
+    top:50%;
+
+    transform:translate(-50%,-50%);
+
+    width:420px;
+
+    padding:30px;
+
+    border-radius:20px;
+
+    background:rgba(20,20,20,.9);
+
+    color:white;
+
+    text-align:center;
+
+    z-index:100;
+
+    box-shadow:
+        0 10px 40px rgba(0,0,0,.5);
+
+}
+
+#catchImage{
+
+    width:180px;
+
+    margin-bottom:20px;
+
+}
+
+#catchGrade{
+
+    font-size:24px;
+    font-weight:bold;
+}
+
+#catchName{
+
+    font-size:38px;
+    font-weight:bold;
+
+    margin-top:10px;
+}
+
+#catchDesc{
+
+    margin-top:20px;
+
+    font-size:20px;
+
+    line-height:1.6;
+}
+
+#closePopup{
+
+    margin-top:30px;
+
+    width:180px;
+    height:55px;
+
+    font-size:22px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
+}

@@ -10,6 +10,43 @@ const LocationName = {
     8: "루테란"
 };
 
+const GradeData = {
+    common: {
+        name: "일반",
+        color: "#ffffff"
+    },
+
+    uncommon: {
+        name: "고급",
+        color: "#5ec45e"
+    },
+
+    rare: {
+        name: "희귀",
+        color: "#4aa3ff"
+    },
+
+    epic: {
+        name: "영웅",
+        color: "#b04cff"
+    },
+
+    legendary: {
+        name: "전설",
+        color: "#ffb400"
+    },
+
+    relic: {
+        name: "유물",
+        color: "#ff6a00"
+    },
+
+    ancient: {
+        name: "고대",
+        color: "#e0c48f"
+    }
+};
+
 const FishData = [
     {
         id: "golden_mokoko",
@@ -28,6 +65,8 @@ const FishData = [
         location: [0],
 
         image: "golden_mokoko.png",
+
+        page: "golden_mokoko.html",
 
         weight: 10
     },
@@ -50,6 +89,8 @@ const FishData = [
 
         image: "shoe.png",
 
+        page: "shoe.html",
+
         weight: 300
     },
 
@@ -71,26 +112,7 @@ const FishData = [
 
         image: "can.png",
 
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
+        page: "can.html",
 
         weight: 0
     },
@@ -113,321 +135,8 @@ const FishData = [
 
         image: ".png",
 
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
+        page: ".html",
 
         weight: 0
     },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    },
-
-    {
-        id: "",
-
-        name: "",
-
-        type: "",
-
-        grade: "",
-
-        description:
-            "",
-
-        price: 0,
-
-        location: [],
-
-        image: ".png",
-
-        weight: 0
-    }
 ];

@@ -1,75 +1,177 @@
 const fishBtn = document.getElementById("fishBtn");
-
 const miniGame = document.getElementById("miniGame");
-
 const message = document.getElementById("message");
+const catchPopup = document.getElementById("catchPopup");
+const catchImage = document.getElementById("catchImage");
+const catchGrade = document.getElementById("catchGrade");
+const catchName = document.getElementById("catchName");
+const catchDesc = document.getElementById("catchDesc");
+const closePopup = document.getElementById("closePopup");
+
+const params = new URLSearchParams(window.location.search);
+const locationId =
+    Number(params.get("location")) || 1;
 
 let failTimer;
 
-fishBtn.onclick = () => {
+// ======================
+// 지역별 물고기 목록
+// ======================
 
-    fishBtn.disabled = true;
+function getFishByLocation(location) {
 
-    fishBtn.innerHTML = "🎣 낚시 중...";
+    return FishData.filter(fish =>
+        fish.location.includes(0) ||
+        fish.location.includes(location)
+    );
 
-    const wait = 3000 + Math.random() * 5000;
+}
 
-    setTimeout(startMiniGame, wait);
+// ======================
+// 가중치 랜덤 뽑기
+// ======================
 
-};
+function randomFish(location) {
 
-function startMiniGame(){
+    const list =
+        getFishByLocation(location);
+
+    const totalWeight =
+        list.reduce(
+            (sum, fish) =>
+                sum + fish.weight,
+            0
+        );
+
+    let random =
+        Math.random() * totalWeight;
+
+    for (const fish of list) {
+
+        random -= fish.weight;
+
+        if (random <= 0) {
+            return fish;
+        }
+
+    }
+
+    return list[0];
+}
+
+// ======================
+// 낚시 시작
+// ======================
+
+fishBtn.onclick = startFishing;
+
+// ======================
+// 미니게임 시작
+// ======================
+
+function startMiniGame() {
 
     miniGame.style.display = "block";
 
-    failTimer = setTimeout(failFishing,2000);
+    failTimer =
+        setTimeout(
+            failFishing,
+            2000
+        );
 
 }
+
+// ======================
+// 미니게임 성공
+// ======================
 
 miniGame.onclick = () => {
 
     clearTimeout(failTimer);
 
-    miniGame.style.display="none";
+    miniGame.style.display = "none";
 
     successFishing();
 
 };
 
-function successFishing(){
+// ======================
+// 낚시 성공
+// ======================
 
-    message.style.display="block";
+function successFishing() {
 
-    message.innerHTML="🎉 낚시에 성공했습니다!";
+    const fish = randomFish(locationId);
 
-    fishBtn.disabled=false;
+    const grade = GradeData[fish.grade];
 
-    fishBtn.innerHTML="🎣 낚시하기";
+    catchPopup.style.display = "block";
 
-    setTimeout(()=>{
+    catchImage.src = "../images/" + fish.image;
 
-        message.style.display="none";
+    catchGrade.innerHTML = `[${grade.name}]`;
 
-    },2000);
+    catchGrade.style.color = grade.color;
+
+    catchName.innerHTML = fish.name;
+
+    catchName.style.color = grade.color;
+
+    catchDesc.innerHTML = fish.description.replace(/\n/g, "<br>");
+
+    fishBtn.disabled = false;
+    fishBtn.innerHTML = "🎣 낚시하기";
+}
+
+// ======================
+// 낚시 실패
+// ======================
+
+function failFishing() {
+
+    miniGame.style.display = "none";
+
+    message.style.display = "block";
+
+    message.innerHTML =
+        "❌<br><br>물고기를 놓쳤습니다.";
+
+    fishBtn.disabled = false;
+    fishBtn.innerHTML = "🎣 낚시하기";
+
+    setTimeout(() => {
+
+        message.style.display = "none";
+
+    }, 2000);
 
 }
 
-function failFishing(){
+closePopup.onclick = () => {
 
-    miniGame.style.display="none";
+    catchPopup.style.display =
+        "none";
 
-    message.style.display="block";
+    startFishing();
 
-    message.innerHTML="❌ 물고기를 놓쳤습니다.";
+};
 
-    fishBtn.disabled=false;
+function startFishing(){
 
-    fishBtn.innerHTML="🎣 낚시하기";
+    fishBtn.disabled = true;
 
-    setTimeout(()=>{
+    fishBtn.innerHTML =
+        "🎣 낚시 중...";
 
-        message.style.display="none";
+    message.style.display =
+        "none";
 
-    },2000);
+    const wait =
+        3000 + Math.random() * 5000;
+
+    setTimeout(
+        startMiniGame,
+        wait
+    );
 
 }
