@@ -18,7 +18,7 @@ const sb = window.supabase.createClient(
 
     const { data: player } = await sb
         .from("players")
-        .select("member_code")
+        .select("nickname, gold")
         .eq("member_code", memberCode)
         .single();
 
@@ -27,6 +27,13 @@ const sb = window.supabase.createClient(
         location.href = "../login/login.html";
         return;
     }
+
+    document.getElementById("title").innerHTML = `
+    🎒 ${player.nickname}님의 가방
+    <span id="goldBox">
+        💰 ${player.gold.toLocaleString()} G
+    </span>
+`;
 
     // ======================
     // 인벤토리 조회
