@@ -70,5 +70,5 @@ loginBtn.onclick = async () => {
     );
 
     location.href =
-        "../main/main.html";
+        "../menu/menu.html";
 };
