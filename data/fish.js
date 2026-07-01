@@ -68,7 +68,7 @@ const FishData = [
 
         page: "golden_mokoko.html",
 
-        weight: 10
+        weight: 1000
     },
 
     {
@@ -91,7 +91,7 @@ const FishData = [
 
         page: "shoe.html",
 
-        weight: 300
+        weight: 30000
     },
 
     {
@@ -114,7 +114,53 @@ const FishData = [
 
         page: "can.html",
 
-        weight: 300
+        weight: 30000
+    },
+
+    {
+        id: "mokoko",
+
+        name: "모코코",
+
+        type: "fish",
+
+        grade: "uncommon",
+
+        description:
+            "기분 좋은 향기가 솔솔 피어난다. 솔솔? 솔언니?",
+
+        price: 100,
+
+        location: [0],
+
+        image: "mokoko.png",
+
+        page: "mokoko.html",
+
+        weight: 5000
+    },
+
+    {
+        id: "herring",
+
+        name: "청어",
+
+        type: "fish",
+
+        grade: "uncommon",
+
+        description:
+            "시큼한 청어. 20마리를 모아 둥근 나무통에 넣어 숙성시켜보자.",
+
+        price: 500,
+
+        location: [0],
+
+        image: "herring.png",
+
+        page: "herring.html",
+
+        weight: 3000
     },
 
     {
@@ -139,4 +185,142 @@ const FishData = [
 
         weight: 0
     },
+
+    {
+        id: "",
+
+        name: "",
+
+        type: "",
+
+        grade: "",
+
+        description:
+            "",
+
+        price: 0,
+
+        location: [],
+
+        image: ".png",
+
+        page: ".html",
+
+        weight: 0
+    },
+
+    {
+        id: "",
+
+        name: "",
+
+        type: "",
+
+        grade: "",
+
+        description:
+            "",
+
+        price: 0,
+
+        location: [],
+
+        image: ".png",
+
+        page: ".html",
+
+        weight: 0
+    },
+
+    {
+        id: "",
+
+        name: "",
+
+        type: "",
+
+        grade: "",
+
+        description:
+            "",
+
+        price: 0,
+
+        location: [],
+
+        image: ".png",
+
+        page: ".html",
+
+        weight: 0
+    },
+
+    {
+        id: "",
+
+        name: "",
+
+        type: "",
+
+        grade: "",
+
+        description:
+            "",
+
+        price: 0,
+
+        location: [],
+
+        image: ".png",
+
+        page: ".html",
+
+        weight: 0
+    },
+
+    {
+        id: "",
+
+        name: "",
+
+        type: "",
+
+        grade: "",
+
+        description:
+            "",
+
+        price: 0,
+
+        location: [],
+
+        image: ".png",
+
+        page: ".html",
+
+        weight: 0
+    },
+
+    {
+        id: "",
+
+        name: "",
+
+        type: "",
+
+        grade: "",
+
+        description:
+            "",
+
+        price: 0,
+
+        location: [],
+
+        image: ".png",
+
+        page: ".html",
+
+        weight: 0
+    }
 ];
