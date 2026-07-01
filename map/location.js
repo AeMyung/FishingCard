@@ -2,10 +2,7 @@ const fishBtn = document.getElementById("fishBtn");
 const miniGame = document.getElementById("miniGame");
 const message = document.getElementById("message");
 const catchPopup = document.getElementById("catchPopup");
-const catchImage = document.getElementById("catchImage");
-const catchGrade = document.getElementById("catchGrade");
-const catchName = document.getElementById("catchName");
-const catchDesc = document.getElementById("catchDesc");
+const catchCard = document.getElementById("catchCard");
 const closePopup = document.getElementById("closePopup");
 
 const params = new URLSearchParams(window.location.search);
@@ -101,26 +98,19 @@ miniGame.onclick = () => {
 
 function successFishing() {
 
-    const fish = randomFish(locationId);
+    const fish =
+        randomFish(locationId);
 
-    const grade = GradeData[fish.grade];
+    catchPopup.style.display =
+        "block";
 
-    catchPopup.style.display = "block";
-
-    catchImage.src = "../images/" + fish.image;
-
-    catchGrade.innerHTML = `[${grade.name}]`;
-
-    catchGrade.style.color = grade.color;
-
-    catchName.innerHTML = fish.name;
-
-    catchName.style.color = grade.color;
-
-    catchDesc.innerHTML = fish.description.replace(/\n/g, "<br>");
+    catchCard.src =
+        "../images/" + fish.id + ".png";
 
     fishBtn.disabled = false;
-    fishBtn.innerHTML = "🎣 낚시하기";
+    fishBtn.innerHTML =
+        "🎣 낚시하기";
+
 }
 
 // ======================
@@ -156,7 +146,7 @@ closePopup.onclick = () => {
 
 };
 
-function startFishing(){
+function startFishing() {
 
     fishBtn.disabled = true;
 

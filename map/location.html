@@ -4,66 +4,61 @@
 
 <head>
 
-<meta charset="UTF-8">
+    <meta charset="UTF-8">
 
-<title>Loa Fishing</title>
+    <title>Loa Fishing</title>
 
-<link rel="stylesheet" href="../css/location.css">
+    <link rel="stylesheet" href="../css/location.css">
 
 </head>
 
 <body>
 
-<a class="home" href="../index.html">← 월드맵으로</a>
+    <a class="home" href="../index.html">← 월드맵으로</a>
 
-<div class="panel">
+    <div class="panel">
 
-    <button id="fishBtn" class="menuBtn">
+        <button id="fishBtn" class="menuBtn">
 
-        🎣 낚시하기
+            🎣 낚시하기
+
+        </button>
+
+        <button class="menuBtn">
+
+            🧰 낚시도구
+
+        </button>
+
+        <button class="menuBtn">
+
+            🎒 가방 확인
+
+        </button>
+
+    </div>
+
+    <button id="miniGame">
+
+        🎣 낚시 미니게임!
 
     </button>
 
-    <button class="menuBtn">
-
-        🧰 낚시도구
-
-    </button>
-
-    <button class="menuBtn">
-
-        🎒 가방 확인
-
-    </button>
-
-</div>
-
-<button id="miniGame">
-
-🎣 낚시 미니게임!
-
-</button>
-
-<div id="message"></div>
+    <div id="message"></div>
     <div id="catchPopup">
 
-    <img id="catchImage">
+        <img id="catchCard">
 
-    <div id="catchGrade"></div>
+        <button id="closePopup">
 
-    <div id="catchName"></div>
+            확인
 
-    <div id="catchDesc"></div>
+        </button>
 
-    <button id="closePopup">
+    </div>
 
-        확인
-
-    </button>
-</div>
-
-<script src="../data/fish.js"></script>
-<script src="location.js"></script>
+    <script src="../data/fish.js"></script>
+    <script src="location.js"></script>
 
 </body>
 

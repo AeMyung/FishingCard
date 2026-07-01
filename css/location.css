@@ -165,54 +165,43 @@ body{
 
     transform:translate(-50%,-50%);
 
-    width:420px;
-
-    padding:30px;
+    padding:20px;
 
     border-radius:20px;
 
-    background:rgba(20,20,20,.9);
-
-    color:white;
+    background:rgba(0,0,0,.85);
 
     text-align:center;
 
     z-index:100;
 
+}
+
+#catchCard{
+
+    width:430px;
+
+    border-radius:20px;
+
     box-shadow:
-        0 10px 40px rgba(0,0,0,.5);
+        0 10px 35px rgba(0,0,0,.5);
 
 }
 
-#catchImage{
-
-    width:180px;
-
-    margin-bottom:20px;
-
-}
-
-#catchGrade{
-
-    font-size:24px;
-    font-weight:bold;
-}
-
-#catchName{
-
-    font-size:38px;
-    font-weight:bold;
-
-    margin-top:10px;
-}
-
-#catchDesc{
+#closePopup{
 
     margin-top:20px;
 
-    font-size:20px;
+    width:180px;
+    height:55px;
 
-    line-height:1.6;
+    font-size:22px;
+
+    border:none;
+
+    border-radius:15px;
+
+    cursor:pointer;
 }
 
 #closePopup{
