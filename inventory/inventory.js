@@ -5,6 +5,10 @@ const sb = window.supabase.createClient(
 
 (async () => {
 
+    // ======================
+    // 로그인 확인
+    // ======================
+
     const memberCode = localStorage.getItem("member_code");
 
     if (!memberCode) {
@@ -12,66 +16,81 @@ const sb = window.supabase.createClient(
         return;
     }
 
-    const { data } = await sb
+    const { data: player } = await sb
         .from("players")
         .select("member_code")
         .eq("member_code", memberCode)
         .single();
 
-    if (!data) {
+    if (!player) {
         localStorage.removeItem("member_code");
         location.href = "../login/login.html";
         return;
     }
 
+    // ======================
+    // 인벤토리 조회
+    // ======================
+
+    const { data: inventory, error } = await sb
+        .from("inventory")
+        .select("*")
+        .eq("member_code", memberCode);
+
+    if (error) {
+        console.error(error);
+        return;
+    }
+
+    const list =
+        document.getElementById(
+            "inventoryList"
+        );
+
+    list.innerHTML = "";
+
+    // ======================
+    // 아이템 출력
+    // ======================
+
+    for (const item of inventory) {
+
+        const fish =
+            FishData.find(
+                x => x.id === item.fish_id
+            );
+
+        if (!fish) continue;
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.className = "item";
+
+        div.innerHTML = `
+            <img src="../images/${fish.image}">
+
+            <div class="info">
+
+                <div class="name">
+                    ${fish.name}
+                </div>
+
+                <div class="desc">
+                    ${fish.description}
+                </div>
+
+            </div>
+
+            <div class="count">
+                x${item.count}
+            </div>
+        `;
+
+        list.appendChild(div);
+
+    }
+
 })();
-
-const list =
-    document.getElementById(
-        "inventoryList"
-    );
-
-const inventory =
-    JSON.parse(
-        localStorage.getItem(
-            "inventory"
-        )
-    ) || [];
-
-for (const item of inventory) {
-
-    const fish =
-        FishData.find(
-            x => x.id === item.id
-        );
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.className = "item";
-
-    div.innerHTML = `
-    <img src="../images/${fish.image}">
-
-    <div class="info">
-
-        <div class="name">
-            ${fish.name}
-        </div>
-
-        <div class="desc">
-            ${fish.description}
-        </div>
-
-    </div>
-
-    <div class="count">
-        x${item.count}
-    </div>
-`;
-
-    list.appendChild(div);
-
-}
