@@ -1,221 +1,236 @@
-body{
+body {
 
-    margin:0;
+    margin: 0;
 
-    width:100vw;
+    width: 100vw;
 
-    height:100vh;
+    height: 100vh;
 
-    overflow:hidden;
+    overflow: hidden;
 
-    font-family:"Malgun Gothic";
+    font-family: "Malgun Gothic";
 
-    background-image:url("../images/elgacia.png");
+    background-image: url("../images/elgacia.png");
 
-    background-size:cover;
+    background-size: cover;
 
-    background-position:center;
-
-}
-
-.home{
-
-    position:absolute;
-
-    left:30px;
-
-    top:25px;
-
-    color:white;
-
-    text-decoration:none;
-
-    font-size:26px;
-
-    font-weight:bold;
-
-    padding:10px 18px;
-
-    border-radius:12px;
-
-    background:rgba(0,0,0,.4);
+    background-position: center;
 
 }
 
-.home:hover{
+.home {
 
-    background:rgba(255,255,255,.2);
+    position: absolute;
 
-}
+    left: 30px;
 
-.panel{
+    top: 25px;
 
-    position:absolute;
+    color: white;
 
-    left:50%;
+    text-decoration: none;
 
-    bottom:40px;
+    font-size: 26px;
 
-    transform:translateX(-50%);
+    font-weight: bold;
 
-    width:520px;
+    padding: 10px 18px;
 
-    padding:25px;
+    border-radius: 12px;
 
-    border-radius:25px;
-
-    background:rgba(30,30,30,.45);
-
-    backdrop-filter:blur(12px);
+    background: rgba(0, 0, 0, .4);
 
 }
 
-.menuBtn{
+.home:hover {
 
-    width:100%;
-
-    height:60px;
-
-    margin:8px 0;
-
-    border:none;
-
-    border-radius:15px;
-
-    cursor:pointer;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    transition:.2s;
+    background: rgba(255, 255, 255, .2);
 
 }
 
-.menuBtn:hover{
+.panel {
 
-    transform:translateY(-2px);
+    position: absolute;
 
-}
+    left: 50%;
 
-#miniGame{
+    bottom: 40px;
 
-    display:none;
+    transform: translateX(-50%);
 
-    position:absolute;
+    width: 520px;
 
-    left:50%;
+    padding: 25px;
 
-    top:45%;
+    border-radius: 25px;
 
-    transform:translate(-50%,-50%);
+    background: rgba(30, 30, 30, .45);
 
-    width:260px;
-
-    height:80px;
-
-    font-size:28px;
-
-    font-weight:bold;
-
-    border:none;
-
-    border-radius:18px;
-
-    cursor:pointer;
-
-    background:#ffcf42;
+    backdrop-filter: blur(12px);
 
 }
 
-#message{
+.menuBtn {
 
-    display:none;
+    width: 100%;
 
-    position:absolute;
+    height: 60px;
 
-    left:50%;
+    margin: 8px 0;
 
-    top:35%;
+    border: none;
 
-    transform:translate(-50%,-50%);
+    border-radius: 15px;
 
-    padding:25px 45px;
+    cursor: pointer;
 
-    border-radius:18px;
+    font-size: 24px;
 
-    background:rgba(0,0,0,.75);
+    font-weight: bold;
 
-    color:white;
-
-    font-size:32px;
-
-    font-weight:bold;
+    transition: .2s;
 
 }
 
-#catchPopup{
+.menuBtn:hover {
 
-    display:none;
-
-    position:absolute;
-
-    left:50%;
-    top:50%;
-
-    transform:translate(-50%,-50%);
-
-    padding:20px;
-
-    border-radius:20px;
-
-    background:rgba(0,0,0,.85);
-
-    text-align:center;
-
-    z-index:100;
+    transform: translateY(-2px);
 
 }
 
-#catchCard{
+#miniGame {
 
-    width:430px;
+    display: none;
 
-    border-radius:20px;
+    position: absolute;
+
+    left: 50%;
+
+    top: 45%;
+
+    transform: translate(-50%, -50%);
+
+    width: 260px;
+
+    height: 80px;
+
+    font-size: 28px;
+
+    font-weight: bold;
+
+    border: none;
+
+    border-radius: 18px;
+
+    cursor: pointer;
+
+    background: #ffcf42;
+
+}
+
+#message {
+
+    display: none;
+
+    position: absolute;
+
+    left: 50%;
+
+    top: 35%;
+
+    transform: translate(-50%, -50%);
+
+    padding: 25px 45px;
+
+    border-radius: 18px;
+
+    background: rgba(0, 0, 0, .75);
+
+    color: white;
+
+    font-size: 32px;
+
+    font-weight: bold;
+
+}
+
+#catchPopup {
+
+    display: none;
+
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+
+    transform: translate(-50%, -50%);
+
+    width: 90%;
+    max-width: 470px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background: rgba(0, 0, 0, .85);
+
+    text-align: center;
+
+    z-index: 100;
+}
+
+#catchCard {
+
+    width: 430px;
+
+    border-radius: 20px;
 
     box-shadow:
-        0 10px 35px rgba(0,0,0,.5);
+        0 10px 35px rgba(0, 0, 0, .5);
+
+    display: block;
+
+    width: 100%;
+    max-width: 430px;
+
+    border-radius: 20px;
+
+    margin: 0 auto;
 
 }
 
-#closePopup{
+#closePopup {
 
-    margin-top:20px;
+    display: block;
 
-    width:180px;
-    height:55px;
+    width: 180px;
+    height: 55px;
 
-    font-size:22px;
+    margin: 20px auto 0;
 
-    border:none;
+    font-size: 22px;
 
-    border-radius:15px;
+    border: none;
 
-    cursor:pointer;
+    border-radius: 15px;
+
+    cursor: pointer;
+
+    clear: both;
 }
 
-#closePopup{
+#closePopup {
 
-    margin-top:30px;
+    margin-top: 30px;
 
-    width:180px;
-    height:55px;
+    width: 180px;
+    height: 55px;
 
-    font-size:22px;
+    font-size: 22px;
 
-    border:none;
+    border: none;
 
-    border-radius:15px;
+    border-radius: 15px;
 
-    cursor:pointer;
+    cursor: pointer;
 }
