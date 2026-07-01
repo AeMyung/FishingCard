@@ -1,3 +1,10 @@
+const sb = window.supabase.createClient(
+    SUPABASE_URL,
+    SUPABASE_KEY
+);
+
+const memberCode = localStorage.getItem("member_code");
+
 const fishBtn = document.getElementById("fishBtn");
 const miniGame = document.getElementById("miniGame");
 const message = document.getElementById("message");
@@ -107,11 +114,11 @@ miniGame.onclick = () => {
 // 낚시 성공
 // ======================
 
-function successFishing() {
+async function successFishing() {
 
     const fish = randomFish(locationId);
 
-    addFish(fish.id);
+    await addFish(fish.id);
 
     catchPopup.style.display = "block";
 
@@ -171,48 +178,58 @@ function startFishing() {
 
 }
 
-function getInventory() {
+async function addFish(fishId) {
 
-    return JSON.parse(
-        localStorage.getItem("inventory")
-    ) || [];
+    const { data, error } = await sb
+        .from("inventory")
+        .select("count")
+        .eq("member_code", memberCode)
+        .eq("fish_id", fishId)
+        .maybeSingle();
 
-}
+    if (error) {
 
-function saveInventory(inventory) {
+        console.error(error);
 
-    localStorage.setItem(
-        "inventory",
-        JSON.stringify(inventory)
-    );
-
-}
-
-function addFish(fishId) {
-
-    const inventory =
-        getInventory();
-
-    const item =
-        inventory.find(
-            x => x.id === fishId
-        );
-
-    if (item) {
-
-        item.count++;
-
-    }
-    else {
-
-        inventory.push({
-            id: fishId,
-            count: 1
-        });
+        return;
 
     }
 
-    saveInventory(inventory);
+    if (data) {
+
+        const { error: updateError } =
+            await sb
+                .from("inventory")
+                .update({
+                    count: data.count + 1
+                })
+                .eq("member_code", memberCode)
+                .eq("fish_id", fishId);
+
+        if (updateError) {
+
+            console.error(updateError);
+
+        }
+
+    } else {
+
+        const { error: insertError } =
+            await sb
+                .from("inventory")
+                .insert({
+                    member_code: memberCode,
+                    fish_id: fishId,
+                    count: 1
+                });
+
+        if (insertError) {
+
+            console.error(insertError);
+
+        }
+
+    }
 
 }
 

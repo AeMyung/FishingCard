@@ -72,9 +72,9 @@ h1 {
 
 }
 
-.spot img {
+.spot img{
 
-    width: 110px;
+    width:clamp(65px, 7vw, 110px);
 
 }
 
@@ -90,65 +90,65 @@ h1 {
 
 .spot1 {
 
-    left: 160px;
+    left: 11%;
 
-    top: 115px;
+    top: 9.5%;
 
 }
 
 .spot2 {
 
-    left: 650px;
+    left: 47%;
 
-    top: 90px;
+    top: 8%;
 
 }
 
 .spot3 {
 
-    right: 178px;
+    right: 12.5%;
 
-    top: 160px;
+    top: 15.5%;
 
 }
 
 .spot4 {
 
-    left: 163px;
+    left: 12%;
 
-    top: 400px;
+    top: 40%;
 
 }
 
 .spot5 {
 
-    left: 615px;
+    left: 44.6%;
 
-    top: 370px;
+    top: 40%;
 
 }
 
 .spot6 {
 
-    right: 200px;
+    right: 14.5%;
 
-    top: 420px;
+    top: 44%;
 
 }
 
 .spot7 {
 
-    left: 290px;
+    left: 21%;
 
-    bottom: 140px;
+    bottom: 17%;
 
 }
 
 .spot8 {
 
-    right: 340px;
+    right: 24.5%;
 
-    bottom: 130px;
+    bottom: 15%;
 
 }
 
