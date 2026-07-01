@@ -11,7 +11,7 @@ const errorText = document.getElementById("error");
 const savedCode = localStorage.getItem("member_code");
 
 if (savedCode) {
-    location.href = "../main/main.html";
+    location.href = "../menu/menu.html";
 }
 
 loginBtn.onclick = async () => {
