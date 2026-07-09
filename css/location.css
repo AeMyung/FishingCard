@@ -1,25 +1,3 @@
-const Background= {
-
-    1: "elgacia.png",
-
-        2:"shushire.png",
-
-        3:"payton.png",
-
-        4:"rimlake.png",
-
-        5:"rohendel.png",
-
-        6:"arthentine.png",
-
-        7:"papunika.png",
-
-        8:"luterra.png"
-
-}
-
-;
-
 body {
 
     background-size: cover;
