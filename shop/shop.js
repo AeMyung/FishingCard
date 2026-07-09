@@ -46,66 +46,65 @@ const sb = window.supabase.createClient(
 
     }
 
-    document.getElementById(
-        "goldBox"
-    ).innerHTML = `💰 ${player.gold.toLocaleString()} G`;
+    document.getElementById("goldBox").innerHTML =
+        `💰 ${player.gold.toLocaleString()} G`;
+
+    // ======================
+    // 인벤토리 불러오기
+    // ======================
+
+    const { data: inventory } = await sb
+        .from("inventory")
+        .select("*")
+        .eq("member_code", memberCode);
+
+    const shopList =
+        document.getElementById(
+            "shopList"
+        );
+
+    for (const item of inventory) {
+
+        const fish =
+            FishData.find(
+                x => x.id === item.fish_id
+            );
+
+        if (!fish)
+            continue;
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.className =
+            "shopItem";
+
+        div.innerHTML = `
+
+            <img src="../images/${fish.image}">
+
+            <div class="info">
+
+                <div class="name">
+
+                    ${fish.name}
+
+                </div>
+
+                <div class="count">
+
+                    보유 : ${item.count}
+
+                </div>
+
+            </div>
+
+        `;
+
+        shopList.appendChild(div);
+
+    }
 
 })();
-
-// ======================
-// 인벤토리 불러오기
-// ======================
-
-const { data: inventory } = await sb
-    .from("inventory")
-    .select("*")
-    .eq("member_code", memberCode);
-
-const shopList =
-    document.getElementById(
-        "shopList"
-    );
-
-for (const item of inventory) {
-
-    const fish =
-        FishData.find(
-            x => x.id === item.fish_id
-        );
-
-    if (!fish)
-        continue;
-
-    const div =
-        document.createElement(
-            "div"
-        );
-
-    div.className =
-        "shopItem";
-
-    div.innerHTML = `
-
-        <img src="../images/${fish.image}">
-
-        <div class="info">
-
-            <div class="name">
-
-                ${fish.name}
-
-            </div>
-
-            <div class="count">
-
-                보유 : ${item.count}
-
-            </div>
-
-        </div>
-
-    `;
-
-    shopList.appendChild(div);
-
-}
