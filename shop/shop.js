@@ -3,13 +3,16 @@ const sb = window.supabase.createClient(
     SUPABASE_KEY
 );
 
+let inventory = [];
+let memberCode = "";
+
 (async () => {
 
     // ======================
     // 로그인 확인
     // ======================
 
-    const memberCode =
+    memberCode =
         localStorage.getItem(
             "member_code"
         );
@@ -53,15 +56,28 @@ const sb = window.supabase.createClient(
     // 인벤토리 불러오기
     // ======================
 
-    const { data: inventory } = await sb
+    const result = await sb
         .from("inventory")
         .select("*")
         .eq("member_code", memberCode);
+
+    inventory = result.data || [];
+})();
+
+
+// ======================
+// 판매 탭
+// ======================
+
+function loadSell() {
 
     const shopList =
         document.getElementById(
             "shopList"
         );
+
+    shopList.style.display = "block";
+    shopList.innerHTML = "";
 
     for (const item of inventory) {
 
@@ -107,4 +123,64 @@ const sb = window.supabase.createClient(
 
     }
 
-})();
+}
+
+
+// ======================
+// 구매 탭
+// ======================
+
+function loadBuy() {
+
+    const shopList =
+        document.getElementById(
+            "shopList"
+        );
+
+    shopList.innerHTML = `
+    
+        <h2 style="text-align:center;">
+            준비중입니다.
+        </h2>
+
+    `;
+
+}
+
+const sellTab =
+    document.getElementById(
+        "sellTab"
+    );
+
+const buyTab =
+    document.getElementById(
+        "buyTab"
+    );
+
+sellTab.onclick = () => {
+
+    sellTab.classList.add(
+        "active"
+    );
+
+    buyTab.classList.remove(
+        "active"
+    );
+
+    loadSell();
+
+};
+
+buyTab.onclick = () => {
+
+    buyTab.classList.add(
+        "active"
+    );
+
+    sellTab.classList.remove(
+        "active"
+    );
+
+    loadBuy();
+
+};
