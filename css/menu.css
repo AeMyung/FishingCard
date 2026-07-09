@@ -76,7 +76,18 @@ h1 {
 
 }
 
-.topBtn {
+.menu {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 15px;
+
+}
+
+.menuBtn,
+.logoutBtn {
 
     padding: 16px;
 
@@ -98,16 +109,39 @@ h1 {
 
 }
 
-.topBtn:hover {
+.menuBtn:hover,
+.logoutBtn:hover {
 
     background: #2b66aa;
 
 }
 
-.topBtn {
+.logoutBtn {
 
     margin-top: 20px;
 
     background: #8d3030;
+
+}
+
+.menuBtn {
+
+    background: rgba(40, 70, 120, .75);
+
+    color: white;
+
+    border: none;
+
+    border-radius: 12px;
+
+    transition: .2s;
+
+}
+
+.menuBtn:hover {
+
+    background: rgba(70, 110, 180, .9);
+
+    transform: translateY(-2px);
 
 }
