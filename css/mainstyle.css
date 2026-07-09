@@ -152,6 +152,7 @@ h1 {
 
 }
 
+.menu
 .logout {
 
     position: absolute;
@@ -178,6 +179,7 @@ h1 {
 
 }
 
+.menu:hover
 .logout:hover {
 
     background: rgba(255, 255, 255, .2);
@@ -191,40 +193,5 @@ h1 {
         width:70px;
 
     }
-
-}
-
-.menu{
-
-    position:fixed;
-
-    top:45px;
-    left:30px;
-
-    background:#111827;
-
-    color:white;
-
-    text-decoration:none;
-
-    padding:18px 30px;
-
-    border-radius:18px;
-
-    font-size:24px;
-
-    font-weight:bold;
-
-    transition:.2s;
-
-    box-shadow:0 5px 15px rgba(0,0,0,.3);
-
-}
-
-.menu:hover{
-
-    background:#1f2937;
-
-    transform:translateY(-2px);
 
 }
