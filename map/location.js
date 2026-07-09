@@ -1,3 +1,23 @@
+const Background = {
+
+    1: "elgacia.png",
+
+    2: "shushire.png",
+
+    3: "payton.png",
+
+    4: "rimlake.png",
+
+    5: "rohendel.png",
+
+    6: "arthentine.png",
+
+    7: "papunika.png",
+
+    8: "luterra.png"
+
+};
+
 const sb = window.supabase.createClient(
     SUPABASE_URL,
     SUPABASE_KEY
@@ -15,10 +35,7 @@ const message = document.getElementById("message");
 const catchPopup = document.getElementById("catchPopup");
 const catchCard = document.getElementById("catchCard");
 const closePopup = document.getElementById("closePopup");
-const inventoryBtn =
-    document.getElementById(
-        "inventoryBtn"
-    );
+const inventoryBtn = document.getElementById("inventoryBtn");
 
 inventoryBtn.onclick = () => {
 
@@ -29,6 +46,7 @@ inventoryBtn.onclick = () => {
 
 const params = new URLSearchParams(window.location.search);
 const locationId = Number(params.get("location")) || 1;
+document.body.style.backgroundImage = `url("../images/${Background[locationId]}")`;
 
 let isFishing = false;
 let failTimer;

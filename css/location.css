@@ -1,20 +1,30 @@
+const Background= {
+
+    1: "elgacia.png",
+
+        2:"shushire.png",
+
+        3:"payton.png",
+
+        4:"rimlake.png",
+
+        5:"rohendel.png",
+
+        6:"arthentine.png",
+
+        7:"papunika.png",
+
+        8:"luterra.png"
+
+}
+
+;
+
 body {
 
-    margin: 0;
-
-    width: 100vw;
-
-    height: 100vh;
-
-    overflow: hidden;
-
-    font-family: "Malgun Gothic";
-
-    background-image: url("../images/elgacia.png");
-
     background-size: cover;
-
     background-position: center;
+    background-repeat: no-repeat;
 
 }
 
