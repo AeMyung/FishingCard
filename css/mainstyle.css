@@ -152,8 +152,7 @@ h1 {
 
 }
 
-.menu
-.logout {
+.topBtn {
 
     position: absolute;
 
@@ -179,8 +178,7 @@ h1 {
 
 }
 
-.menu:hover
-.logout:hover {
+.topBtn:hover {
 
     background: rgba(255, 255, 255, .2);
 
