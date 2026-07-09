@@ -61,24 +61,29 @@ const sb = window.supabase.createClient(
     // ======================
     // 아이템 출력
     // ======================
+    function loadFish() {
 
-    for (const item of sortedInventory) {
+        list.style.display = "block";
 
-        const fish =
-            FishData.find(
-                x => x.id === item.fish_id
-            );
+        list.innerHTML = "";
 
-        if (!fish) continue;
+        for (const item of sortedInventory) {
 
-        const div =
-            document.createElement(
-                "div"
-            );
+            const fish =
+                FishData.find(
+                    x => x.id === item.fish_id
+                );
 
-        div.className = "item";
+            if (!fish) continue;
 
-        div.innerHTML = `
+            const div =
+                document.createElement(
+                    "div"
+                );
+
+            div.className = "item";
+
+            div.innerHTML = `
             <img src="../images/${fish.image}">
 
             <div class="info">
@@ -98,8 +103,61 @@ const sb = window.supabase.createClient(
             </div>
         `;
 
-        list.appendChild(div);
+            list.appendChild(div);
+
+        }
 
     }
 
+    function loadItem() {
+
+        list.style.display = "block";
+
+        list.innerHTML = `
+
+        <h2 style="text-align:center;">
+            준비중입니다.
+        </h2>
+
+    `;
+
+    }
+
+    const fishTab =
+        document.getElementById(
+            "fishTab"
+        );
+
+    const itemTab =
+        document.getElementById(
+            "itemTab"
+        );
+
+    fishTab.onclick = () => {
+
+        fishTab.classList.add(
+            "active"
+        );
+
+        itemTab.classList.remove(
+            "active"
+        );
+
+        loadFish();
+
+    };
+
+    itemTab.onclick = () => {
+
+        itemTab.classList.add(
+            "active"
+        );
+
+        fishTab.classList.remove(
+            "active"
+        );
+
+        loadItem();
+
+    };
 })();

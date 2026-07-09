@@ -135,6 +135,8 @@ h1 {
     overflow-y: auto;
 
     padding-right: 10px;
+
+    display:none;
 }
 
 #inventoryList::-webkit-scrollbar {
@@ -223,30 +225,90 @@ h1 {
     margin-left: 20px;
 }
 
-#title{
+#title {
 
-    display:flex;
+    display: flex;
 
-    justify-content:space-between;
+    justify-content: space-between;
 
-    align-items:center;
+    align-items: center;
 
-    width:90%;
+    width: 90%;
 
-    max-width:900px;
+    max-width: 900px;
 
-    margin:30px auto;
+    margin: 30px auto;
 
 }
 
-#goldBox{
+#goldBox {
 
-    font-size:24px;
+    font-size: 24px;
 
-    color:#FFD54A;
+    color: #FFD54A;
 
-    font-weight:bold;
+    font-weight: bold;
 
-    text-shadow:0 0 10px rgba(255,215,0,.5);
+    text-shadow: 0 0 10px rgba(255, 215, 0, .5);
+
+}
+
+#tabBox {
+
+    width: 900px;
+
+    max-width: 90%;
+
+    margin: 25px auto;
+
+    display: flex;
+
+}
+
+.tabBtn {
+
+    flex: 1;
+
+    height: 60px;
+
+    border: none;
+
+    cursor: pointer;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: white;
+
+    background: rgba(255, 255, 255, .08);
+
+    transition: .2s;
+
+}
+
+.tabBtn:first-child {
+
+    border-radius: 15px 0 0 15px;
+
+}
+
+.tabBtn:last-child {
+
+    border-radius: 0 15px 15px 0;
+
+}
+
+.tabBtn:hover {
+
+    background: rgba(255, 255, 255, .18);
+
+}
+
+.tabBtn.active {
+
+    background: #F7C843;
+
+    color: black;
 
 }
