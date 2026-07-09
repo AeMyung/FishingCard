@@ -3,8 +3,50 @@ const sb = window.supabase.createClient(
     SUPABASE_KEY
 );
 
+const sellPopup =
+    document.getElementById(
+        "sellPopup"
+    );
+
+const sellCount =
+    document.getElementById(
+        "sellCount"
+    );
+
+const cancelSell =
+    document.getElementById(
+        "cancelSell"
+    );
+
+const confirmSell =
+    document.getElementById(
+        "confirmSell"
+    );
+
+const minBtn =
+    document.getElementById(
+        "minBtn"
+    );
+
+const minusBtn =
+    document.getElementById(
+        "minusBtn"
+    );
+
+const plusBtn =
+    document.getElementById(
+        "plusBtn"
+    );
+
+const maxBtn =
+    document.getElementById(
+        "maxBtn"
+    );
+
+let selectedItem = null;
 let inventory = [];
 let memberCode = "";
+let player = null;
 
 (async () => {
 
@@ -30,11 +72,13 @@ let memberCode = "";
     // 플레이어 정보
     // ======================
 
-    const { data: player } = await sb
+    const { data } = await sb
         .from("players")
         .select("nickname, gold")
         .eq("member_code", memberCode)
         .single();
+
+    player = data;
 
     if (!player) {
 
@@ -61,7 +105,47 @@ let memberCode = "";
         .select("*")
         .eq("member_code", memberCode);
 
-    inventory = result.data || [];
+    inventory = sortInventory(result.data || []);
+
+    const gradeOrder = {
+
+        ancient: 7,
+        relic: 6,
+        legendary: 5,
+        epic: 4,
+        rare: 3,
+        uncommon: 2,
+        common: 1
+
+    };
+
+    inventory.sort((a, b) => {
+
+        const fishA =
+            FishData.find(
+                x => x.id === a.fish_id
+            );
+
+        const fishB =
+            FishData.find(
+                x => x.id === b.fish_id
+            );
+
+        // 1순위 : 희귀도
+        const gradeDiff =
+            gradeOrder[fishB.grade] -
+            gradeOrder[fishA.grade];
+
+        if (gradeDiff !== 0)
+            return gradeDiff;
+
+        // 2순위 : 이름
+        return fishA.name.localeCompare(
+            fishB.name,
+            "ko"
+        );
+
+    });
 })();
 
 
@@ -109,6 +193,12 @@ function loadSell() {
 
                 </div>
 
+                <div class="price">
+
+                    판매가 : ${fish.price.toLocaleString()} G
+
+                </div>
+
                 <div class="count">
 
                     보유 : ${item.count}
@@ -117,7 +207,27 @@ function loadSell() {
 
             </div>
 
+            <button class="sellBtn">
+
+                판매
+
+            </button>
+
         `;
+
+        div.querySelector(".sellBtn").onclick = () => {
+
+            console.log("판매 버튼 클릭");
+
+            selectedItem = item;
+
+            sellCount.value = item.count;
+
+            sellCount.max = item.count;
+
+            sellPopup.style.display = "flex";
+
+        };
 
         shopList.appendChild(div);
 
@@ -184,3 +294,219 @@ buyTab.onclick = () => {
     loadBuy();
 
 };
+
+cancelSell.onclick = () => {
+
+    sellPopup.style.display = "none";
+
+};
+
+confirmSell.onclick = async () => {
+
+    const sell =
+        Number(sellCount.value);
+
+    // ======================
+    // 입력 검사
+    // ======================
+
+    if (sell < 1) {
+
+        alert("1개 이상 판매해야 합니다.");
+
+        return;
+
+    }
+
+    if (sell > selectedItem.count) {
+
+        alert("보유 개수보다 많이 판매할 수 없습니다.");
+
+        return;
+
+    }
+
+    // ======================
+    // 남은 개수
+    // ======================
+
+    const remain =
+        selectedItem.count - sell;
+
+    // ======================
+    // inventory 수정
+    // ======================
+
+    if (remain == 0) {
+
+        await sb
+            .from("inventory")
+            .delete()
+            .eq("member_code", memberCode)
+            .eq("fish_id", selectedItem.fish_id);
+
+    }
+
+    else {
+
+        await sb
+            .from("inventory")
+            .update({
+
+                count: remain
+
+            })
+            .eq("member_code", memberCode)
+            .eq("fish_id", selectedItem.fish_id);
+
+    }
+
+    // ======================
+    // 판매 금액 계산
+    // ======================
+
+    const fish =
+        FishData.find(
+            x => x.id === selectedItem.fish_id
+        );
+
+    const earn =
+        fish.price * sell;
+
+    // ======================
+    // 플레이어 골드 증가
+    // ======================
+
+    player.gold += earn;
+
+    await sb
+        .from("players")
+        .update({
+
+            gold: player.gold
+
+        })
+        .eq("member_code", memberCode);
+
+    // ======================
+    // 골드 갱신
+    // ======================
+
+    document.getElementById("goldBox").innerHTML =
+        `💰 ${player.gold.toLocaleString()} G`;
+
+    // ======================
+    // inventory 다시 불러오기
+    // ======================
+
+    const result = await sb
+        .from("inventory")
+        .select("*")
+        .eq("member_code", memberCode);
+
+    inventory = sortInventory(result.data || []);
+
+    const gradeOrder = {
+
+        ancient: 7,
+        relic: 6,
+        legendary: 5,
+        epic: 4,
+        rare: 3,
+        uncommon: 2,
+        common: 1
+
+    };
+
+    inventory.sort((a, b) => {
+
+        const fishA =
+            FishData.find(
+                x => x.id === a.fish_id
+            );
+
+        const fishB =
+            FishData.find(
+                x => x.id === b.fish_id
+            );
+
+        // 1순위 : 희귀도
+        const gradeDiff =
+            gradeOrder[fishB.grade] -
+            gradeOrder[fishA.grade];
+
+        if (gradeDiff !== 0)
+            return gradeDiff;
+
+        // 2순위 : 이름
+        return fishA.name.localeCompare(
+            fishB.name,
+            "ko"
+        );
+
+    });
+
+    // ======================
+    // 팝업 닫기
+    // ======================
+
+    sellPopup.style.display = "none";
+
+    // ======================
+    // 판매 목록 새로고침
+    // ======================
+
+    loadSell();
+
+};
+
+minBtn.onclick = () => {
+
+    sellCount.value = 1;
+
+};
+
+minusBtn.onclick = () => {
+
+    let value =
+        Number(sellCount.value);
+
+    if (value > 1) {
+
+        sellCount.value =
+            value - 1;
+
+    }
+
+};
+
+plusBtn.onclick = () => {
+
+    let value =
+        Number(sellCount.value);
+
+    let max =
+        Number(sellCount.max);
+
+    if (value < max) {
+
+        sellCount.value =
+            value + 1;
+
+    }
+
+};
+
+maxBtn.onclick = () => {
+
+    sellCount.value =
+        sellCount.max;
+
+};
+
+sellCount.addEventListener("input", () => {
+
+    sellCount.value =
+        sellCount.value.replace(/[^0-9]/g, "");
+
+});

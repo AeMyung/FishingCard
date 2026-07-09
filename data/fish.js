@@ -324,3 +324,53 @@ const FishData = [
         weight: 0
     }
 ];
+
+// ======================
+// 인벤토리 정렬
+// ======================
+
+function sortInventory(inventory) {
+
+    const gradeOrder = {
+
+        ancient: 7,
+        relic: 6,
+        legendary: 5,
+        epic: 4,
+        rare: 3,
+        uncommon: 2,
+        common: 1
+
+    };
+
+    inventory.sort((a, b) => {
+
+        const fishA =
+            FishData.find(
+                x => x.id === a.fish_id
+            );
+
+        const fishB =
+            FishData.find(
+                x => x.id === b.fish_id
+            );
+
+        // 희귀도 내림차순
+        const gradeDiff =
+            gradeOrder[fishB.grade] -
+            gradeOrder[fishA.grade];
+
+        if (gradeDiff !== 0)
+            return gradeDiff;
+
+        // 이름 오름차순
+        return fishA.name.localeCompare(
+            fishB.name,
+            "ko"
+        );
+
+    });
+
+    return inventory;
+
+}

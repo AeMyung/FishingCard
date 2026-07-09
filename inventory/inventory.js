@@ -44,6 +44,8 @@ const sb = window.supabase.createClient(
         .select("*")
         .eq("member_code", memberCode);
 
+    const sortedInventory = sortInventory(inventory);
+
     if (error) {
         console.error(error);
         return;
@@ -60,7 +62,7 @@ const sb = window.supabase.createClient(
     // 아이템 출력
     // ======================
 
-    for (const item of inventory) {
+    for (const item of sortedInventory) {
 
         const fish =
             FishData.find(
