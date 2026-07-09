@@ -156,8 +156,6 @@ h1 {
 
     position: absolute;
 
-    right: 30px;
-
     top: 45px;
 
     color: white;
@@ -181,6 +179,18 @@ h1 {
 .topBtn:hover {
 
     background: rgba(255, 255, 255, .2);
+
+}
+
+.menuOpen{
+
+    left:35px;
+
+}
+
+.logout{
+
+    right:35px;
 
 }
 
