@@ -1,47 +1,42 @@
-const sb = window.supabase.createClient(
-    SUPABASE_URL,
-    SUPABASE_KEY
-);
+const sb = window.supabase.createClient(SUPABASE_URL, SUPABASE_KEY);
 
-const sellPopup =
-    document.getElementById(
-        "sellPopup"
-    );
+const sellPopup = document.getElementById("sellPopup");
 
-const sellCount =
-    document.getElementById(
-        "sellCount"
-    );
+const sellCount = document.getElementById("sellCount");
 
-const cancelSell =
-    document.getElementById(
-        "cancelSell"
-    );
+const cancelSell = document.getElementById("cancelSell");
 
-const confirmSell =
-    document.getElementById(
-        "confirmSell"
-    );
+const confirmSell = document.getElementById("confirmSell");
 
-const minBtn =
-    document.getElementById(
-        "minBtn"
-    );
+const minBtn = document.getElementById("minBtn");
 
-const minusBtn =
-    document.getElementById(
-        "minusBtn"
-    );
+const minusBtn = document.getElementById("minusBtn");
 
-const plusBtn =
-    document.getElementById(
-        "plusBtn"
-    );
+const plusBtn = document.getElementById("plusBtn");
 
-const maxBtn =
-    document.getElementById(
-        "maxBtn"
-    );
+const maxBtn = document.getElementById("maxBtn");
+
+const buyPopup = document.getElementById("buyPopup");
+
+const buyTitle = document.getElementById("buyTitle");
+
+const buyPrice = document.getElementById("buyPrice");
+
+const confirmBuy = document.getElementById("confirmBuy");
+
+const cancelBuy = document.getElementById("cancelBuy");
+
+const buyImage = document.getElementById("buyImage");
+
+const buyCategory = document.getElementById("buyCategory");
+
+const rodTab = document.getElementById("rodTab");
+
+const baitTab = document.getElementById("baitTab");
+
+const accessoryTab = document.getElementById("accessoryTab");
+
+let selectedBuyItem = null;
 
 let selectedItem = null;
 let inventory = [];
@@ -240,7 +235,93 @@ function loadSell() {
 // 구매 탭
 // ======================
 
-function loadBuy() {
+function loadBuyRod() {
+
+    const shopList =
+        document.getElementById(
+            "shopList"
+        );
+
+    shopList.style.display = "block";
+
+    shopList.innerHTML = "";
+
+    for (const rod of RodData) {
+
+        if (!rod.shop.sell)
+            continue;
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.className =
+            "shopItem";
+
+        div.innerHTML = `
+
+            <img src="../images/${rod.image}">
+
+            <div class="info">
+
+                <div class="name">
+
+                    ${rod.name}
+
+                </div>
+
+                <div class="price">
+
+                    구매가 : ${rod.shop.price.toLocaleString()} G
+
+                </div>
+
+            </div>
+
+            <div class="buyBtns">
+
+                <button class="detailBtn">
+
+                    상세
+
+                </button>
+
+                <button class="buyBtn">
+
+                    구매
+
+                </button>
+
+            </div>
+
+        `;
+
+        div.querySelector(".buyBtn").onclick = () => {
+
+            selectedBuyItem = rod;
+
+            buyImage.src =
+                `../images/${rod.image}`;
+
+            buyTitle.innerHTML =
+                rod.name;
+
+            buyPrice.innerHTML =
+                `${rod.shop.price.toLocaleString()} G`;
+
+            buyPopup.style.display =
+                "flex";
+
+        };
+
+        shopList.appendChild(div);
+
+    }
+
+}
+
+function loadBuyBait() {
 
     const shopList =
         document.getElementById(
@@ -248,34 +329,39 @@ function loadBuy() {
         );
 
     shopList.innerHTML = `
-    
         <h2 style="text-align:center;">
             준비중입니다.
         </h2>
-
     `;
 
 }
 
-const sellTab =
-    document.getElementById(
-        "sellTab"
-    );
+function loadBuyAccessory() {
 
-const buyTab =
-    document.getElementById(
-        "buyTab"
-    );
+    const shopList =
+        document.getElementById(
+            "shopList"
+        );
+
+    shopList.innerHTML = `
+        <h2 style="text-align:center;">
+            준비중입니다.
+        </h2>
+    `;
+
+}
+
+const sellTab = document.getElementById("sellTab");
+
+const buyTab = document.getElementById("buyTab");
 
 sellTab.onclick = () => {
 
-    sellTab.classList.add(
-        "active"
-    );
+    buyCategory.style.display = "none";
 
-    buyTab.classList.remove(
-        "active"
-    );
+    sellTab.classList.add("active");
+
+    buyTab.classList.remove("active");
 
     loadSell();
 
@@ -283,15 +369,13 @@ sellTab.onclick = () => {
 
 buyTab.onclick = () => {
 
-    buyTab.classList.add(
-        "active"
-    );
+    buyTab.classList.add("active");
 
-    sellTab.classList.remove(
-        "active"
-    );
+    sellTab.classList.remove("active");
 
-    loadBuy();
+    buyCategory.style.display = "flex";
+
+    rodTab.click();
 
 };
 
@@ -330,8 +414,7 @@ confirmSell.onclick = async () => {
     // 남은 개수
     // ======================
 
-    const remain =
-        selectedItem.count - sell;
+    const remain = selectedItem.count - sell;
 
     // ======================
     // inventory 수정
@@ -365,13 +448,9 @@ confirmSell.onclick = async () => {
     // 판매 금액 계산
     // ======================
 
-    const fish =
-        FishData.find(
-            x => x.id === selectedItem.fish_id
-        );
+    const fish = FishData.find(x => x.id === selectedItem.fish_id);
 
-    const earn =
-        fish.price * sell;
+    const earn = fish.price * sell;
 
     // ======================
     // 플레이어 골드 증가
@@ -392,8 +471,7 @@ confirmSell.onclick = async () => {
     // 골드 갱신
     // ======================
 
-    document.getElementById("goldBox").innerHTML =
-        `💰 ${player.gold.toLocaleString()} G`;
+    document.getElementById("goldBox").innerHTML = `💰 ${player.gold.toLocaleString()} G`;
 
     // ======================
     // inventory 다시 불러오기
@@ -420,29 +498,18 @@ confirmSell.onclick = async () => {
 
     inventory.sort((a, b) => {
 
-        const fishA =
-            FishData.find(
-                x => x.id === a.fish_id
-            );
+        const fishA = FishData.find(x => x.id === a.fish_id);
 
-        const fishB =
-            FishData.find(
-                x => x.id === b.fish_id
-            );
+        const fishB = FishData.find(x => x.id === b.fish_id);
 
         // 1순위 : 희귀도
-        const gradeDiff =
-            gradeOrder[fishB.grade] -
-            gradeOrder[fishA.grade];
+        const gradeDiff = gradeOrder[fishB.grade] - gradeOrder[fishA.grade];
 
         if (gradeDiff !== 0)
             return gradeDiff;
 
         // 2순위 : 이름
-        return fishA.name.localeCompare(
-            fishB.name,
-            "ko"
-        );
+        return fishA.name.localeCompare(fishB.name, "ko");
 
     });
 
@@ -510,3 +577,46 @@ sellCount.addEventListener("input", () => {
         sellCount.value.replace(/[^0-9]/g, "");
 
 });
+
+cancelBuy.onclick = () => {
+
+    buyPopup.style.display =
+        "none";
+
+};
+
+rodTab.onclick = () => {
+
+    rodTab.classList.add("active");
+
+    baitTab.classList.remove("active");
+
+    accessoryTab.classList.remove("active");
+
+    loadBuyRod();
+
+};
+
+baitTab.onclick = () => {
+
+    baitTab.classList.add("active");
+
+    rodTab.classList.remove("active");
+
+    accessoryTab.classList.remove("active");
+
+    loadBuyBait();
+
+};
+
+accessoryTab.onclick = () => {
+
+    accessoryTab.classList.add("active");
+
+    rodTab.classList.remove("active");
+
+    baitTab.classList.remove("active");
+
+    loadBuyAccessory();
+
+};

@@ -36,9 +36,15 @@ const RodData = [
         description:
             "평범한 낚싯대.",
 
-        price: 0,
-
         image: "basic_rod.png",
+
+        shop: {
+
+            sell: false,
+
+            price: 0
+
+        },
 
         maxDurability: 100,
 
@@ -61,9 +67,15 @@ const RodData = [
         description:
             "낚시 시간이 30% 감소한다.",
 
-        price: 5000,
-
         image: "speed_rod.png",
+
+        shop: {
+
+            sell: true,
+
+            price: 5000
+
+        },
 
         maxDurability: 120,
 
@@ -86,9 +98,15 @@ const RodData = [
         description:
             "15% 확률로 같은 물고기를 한 마리 더 낚는다.",
 
-        price: 20000,
-
         image: "double_rod.png",
+
+        shop: {
+
+            sell: true,
+
+            price: 20000
+
+        },
 
         maxDurability: 80,
 
@@ -109,11 +127,17 @@ const RodData = [
         name: "자동 낚싯대",
 
         description:
-            "30초 동안 자동 낚시를 진행한다.",
-
-        price: 100000,
+            "자동 낚시를 진행한다.",
 
         image: "auto_rod.png",
+
+        shop: {
+
+            sell: true,
+
+            price: 100000
+
+        },
 
         maxDurability: 60,
 
@@ -121,7 +145,7 @@ const RodData = [
 
             type: EffectType.AUTO,
 
-            value: 30
+            value: 0
 
         }
 
@@ -142,11 +166,17 @@ const BaitData = [
         name: "지렁이",
 
         description:
-            "일반(Common) 물고기의 출현 확률이 증가한다.",
-
-        price: 100,
+            "낚시할 때 사용하는 흔한 미끼.",
 
         image: "worm.png",
+
+        shop: {
+
+            sell: true,
+
+            price: 100
+
+        },
 
         effect: {
 
@@ -154,7 +184,7 @@ const BaitData = [
 
             target: "common",
 
-            value: 50
+            value: 0
 
         }
 
@@ -167,11 +197,17 @@ const BaitData = [
         name: "새우 미끼",
 
         description:
-            "희귀(Rare) 물고기의 출현 확률이 증가한다.",
-
-        price: 500,
+            "희귀등급 이상 물고기의 출현 확률이 증가한다.",
 
         image: "shrimp.png",
+
+        shop: {
+
+            sell: true,
+
+            price: 500
+
+        },
 
         effect: {
 
@@ -180,29 +216,6 @@ const BaitData = [
             target: "rare",
 
             value: 100
-
-        }
-
-    },
-
-    {
-
-        id: "hidden_bait",
-
-        name: "신비한 미끼",
-
-        description:
-            "히든 물고기의 출현 확률이 증가한다.",
-
-        price: 3000,
-
-        image: "hidden_bait.png",
-
-        effect: {
-
-            type: EffectType.HIDDEN,
-
-            value: 20
 
         }
 
@@ -225,9 +238,15 @@ const AccessoryData = [
         description:
             "물고기 판매 골드가 20% 증가한다.",
 
-        price: 50000,
-
         image: "gold_ring.png",
+
+        shop: {
+
+            sell: true,
+
+            price: 50000
+
+        },
 
         effect: {
 

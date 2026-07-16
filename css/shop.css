@@ -82,69 +82,69 @@ h1 {
 
 }
 
-#shopList{
+#shopList {
 
-    display:none;
+    display: none;
 
-    width:900px;
+    width: 900px;
 
-    height:520px;
+    height: 520px;
 
-    margin:20px auto;
+    margin: 20px auto;
 
-    overflow-y:auto;
+    overflow-y: auto;
 
-    overflow-x:hidden;
+    overflow-x: hidden;
 
-    border-radius:20px;
+    border-radius: 20px;
 
-    background:rgba(0,0,0,.45);
+    background: rgba(0, 0, 0, .45);
 
-    backdrop-filter:blur(10px);
+    backdrop-filter: blur(10px);
 
-    padding:20px;
+    padding: 20px;
 
-    box-sizing:border-box;
+    box-sizing: border-box;
 
-    scrollbar-width:none;
-
-}
-
-#shopList::-webkit-scrollbar{
-
-    display:none;
+    scrollbar-width: none;
 
 }
 
-.shopItem{
+#shopList::-webkit-scrollbar {
 
-    display:flex;
-
-    align-items:center;
-
-    gap:20px;
-
-    margin-bottom:15px;
-
-    padding:20px;
-
-    border-radius:20px;
-
-    background:rgba(20,30,50,.72);
-
-    border:1px solid rgba(255,255,255,.08);
-
-    transition:.2s;
+    display: none;
 
 }
 
-.shopItem:hover{
+.shopItem {
 
-    transform:translateY(-2px);
+    display: flex;
 
-    border-color:rgba(255,215,0,.35);
+    align-items: center;
 
-    box-shadow:0 0 18px rgba(255,215,0,.15);
+    gap: 20px;
+
+    margin-bottom: 15px;
+
+    padding: 20px;
+
+    border-radius: 20px;
+
+    background: rgba(20, 30, 50, .72);
+
+    border: 1px solid rgba(255, 255, 255, .08);
+
+    transition: .2s;
+
+}
+
+.shopItem:hover {
+
+    transform: translateY(-2px);
+
+    border-color: rgba(255, 215, 0, .35);
+
+    box-shadow: 0 0 18px rgba(255, 215, 0, .15);
 
 }
 
@@ -180,15 +180,15 @@ h1 {
 
 }
 
-.price{
+.price {
 
-    margin-top:10px;
+    margin-top: 10px;
 
-    font-size:22px;
+    font-size: 22px;
 
-    color:#ffd54f;
+    color: #ffd54f;
 
-    font-weight:bold;
+    font-weight: bold;
 
 }
 
@@ -200,35 +200,35 @@ h1 {
 
 }
 
-.sellBtn{
+.sellBtn {
 
-    width:130px;
+    width: 130px;
 
-    height:52px;
+    height: 52px;
 
-    border:none;
+    border: none;
 
-    border-radius:14px;
+    border-radius: 14px;
 
-    background:#3b82f6;
+    background: #3b82f6;
 
-    color:white;
+    color: white;
 
-    font-size:20px;
+    font-size: 20px;
 
-    font-weight:bold;
+    font-weight: bold;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
+    transition: .2s;
 
 }
 
-.sellBtn:hover{
+.sellBtn:hover {
 
-    background:#2563eb;
+    background: #2563eb;
 
-    transform:scale(1.05);
+    transform: scale(1.05);
 
 }
 
@@ -253,87 +253,87 @@ h1 {
 
 }
 
-.tabBtn{
+.tabBtn {
 
-    flex:1;
+    flex: 1;
 
-    height:60px;
+    height: 60px;
 
-    border:none;
+    border: none;
 
-    background:transparent;
+    background: transparent;
 
-    color:#d8d8d8;
+    color: #d8d8d8;
 
-    font-size:24px;
+    font-size: 24px;
 
-    font-weight:bold;
+    font-weight: bold;
 
-    cursor:pointer;
+    cursor: pointer;
 
-    transition:.2s;
-
-}
-
-.tabBtn:hover{
-
-    background:rgba(255,255,255,.08);
+    transition: .2s;
 
 }
 
-.tabBtn.active{
+.tabBtn:hover {
 
-    background:#3b82f6;
-
-    color:white;
+    background: rgba(255, 255, 255, .08);
 
 }
 
-#sellPopup{
+.tabBtn.active {
 
-    display:none;
+    background: #3b82f6;
 
-    position:fixed;
-
-    inset:0;
-
-    background:rgba(0,0,0,.55);
-
-    justify-content:center;
-
-    align-items:center;
-
-    z-index:999;
+    color: white;
 
 }
 
-.popup{
+#sellPopup {
 
-    width:420px;
+    display: none;
 
-    padding:30px;
+    position: fixed;
 
-    border-radius:20px;
+    inset: 0;
 
-    background:#1b2435;
+    background: rgba(0, 0, 0, .55);
 
-    color:white;
+    justify-content: center;
 
-    text-align:center;
+    align-items: center;
+
+    z-index: 999;
 
 }
 
-.popup h2{
+.popup {
 
-    margin-top:0;
+    width: 420px;
 
-    margin-bottom:25px;
+    padding: 30px;
+
+    border-radius: 20px;
+
+    background: #1b2435;
+
+    color: white;
+
+    text-align: center;
+
+}
+
+.popup h2 {
+
+    margin-top: 0;
+
+    margin-bottom: 25px;
 
 }
 
 /* Chrome, Edge, Safari */
 #sellCount::-webkit-inner-spin-button,
-#sellCount::-webkit-outer-spin-button{
+#sellCount::-webkit-outer-spin-button {
 
     -webkit-appearance: none;
 
@@ -341,33 +341,303 @@ h1 {
 
 }
 
-#countControl{
+#countControl {
 
-    display:flex;
+    display: flex;
 
-    justify-content:center;
+    justify-content: center;
 
-    align-items:center;
+    align-items: center;
 
-    gap:10px;
+    gap: 10px;
 
-    margin:25px 0;
+    margin: 25px 0;
 
 }
 
-#countControl button{
+#countControl button {
 
-    width:50px;
+    width: 50px;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    background: #3b82f6;
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+#countControl button:hover {
+
+    background: #2563eb;
+
+    transform: scale(1.05);
+
+}
+
+#sellCount {
+
+    width: 120px;
+
+    height: 50px;
+
+    text-align: center;
+
+    font-size: 28px;
+
+    border: none;
+
+    border-radius: 12px;
+
+}
+
+/* 숫자 입력 화살표 제거 */
+#sellCount::-webkit-inner-spin-button,
+#sellCount::-webkit-outer-spin-button {
+
+    -webkit-appearance: none;
+
+    margin: 0;
+
+}
+
+#sellCount {
+
+    -moz-appearance: textfield;
+
+    appearance: textfield;
+
+}
+
+.popupBtns {
+
+    display: flex;
+
+    gap: 15px;
+
+}
+
+.popupBtns button {
+
+    flex: 1;
+
+    height: 52px;
+
+    border: none;
+
+    border-radius: 12px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+#cancelSell {
+
+    background: #555;
+
+    color: white;
+
+}
+
+#confirmSell {
+
+    background: #3b82f6;
+
+    color: white;
+
+}
+
+#buyPopup {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+
+    top: 0;
+
+    width: 100%;
+
+    height: 100%;
+
+    background: rgba(0, 0, 0, .5);
+
+    justify-content: center;
+
+    align-items: center;
+
+    z-index: 999;
+
+}
+
+#buyTitle {
+
+    font-size: 30px;
+
+}
+
+#buyPrice {
+
+    margin: 25px 0;
+
+    font-size: 24px;
+
+    color: gold;
+
+}
+
+#buyPopup .popupBtns {
+
+    display: flex;
+
+    justify-content: space-between;
+
+    gap: 20px;
+
+}
+
+#confirmBuy {
+
+    flex: 1;
+
+}
+
+#cancelBuy {
+
+    flex: 1;
+
+}
+
+.buyBtns {
+
+    display: flex;
+
+    gap: 12px;
+
+    align-items: center;
+
+}
+
+.detailBtn {
+
+    width: 110px;
+
+    height: 55px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: rgba(255, 255, 255, .12);
+
+    color: white;
+
+    font-size: 20px;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.detailBtn:hover {
+
+    background: rgba(255, 255, 255, .22);
+
+}
+
+.buyBtn {
+
+    width: 140px;
+
+    height: 55px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #3b82f6;
+
+    color: white;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+.buyBtn:hover {
+
+    background: #2563eb;
+
+}
+
+#buyImage {
+
+    width: 140px;
+
+    display: block;
+
+    margin: 0 auto 20px;
+
+}
+
+#buyPrice {
+
+    margin: 25px 0 35px;
+
+    font-size: 26px;
+
+    font-weight: bold;
+
+    color: gold;
+
+}
+
+#buyCategory{
+
+    display:none;
+
+    width:900px;
+
+    margin:15px auto;
+
+    gap:10px;
+
+    justify-content:center;
+
+}
+
+.categoryBtn{
+
+    flex:1;
 
     height:50px;
 
     border:none;
 
-    border-radius:12px;
-
-    background:#3b82f6;
-
-    color:white;
+    border-radius:15px;
 
     font-size:22px;
 
@@ -375,90 +645,14 @@ h1 {
 
     cursor:pointer;
 
-    transition:.2s;
-
-}
-
-#countControl button:hover{
-
-    background:#2563eb;
-
-    transform:scale(1.05);
-
-}
-
-#sellCount{
-
-    width:120px;
-
-    height:50px;
-
-    text-align:center;
-
-    font-size:28px;
-
-    border:none;
-
-    border-radius:12px;
-
-}
-
-/* 숫자 입력 화살표 제거 */
-#sellCount::-webkit-inner-spin-button,
-#sellCount::-webkit-outer-spin-button{
-
-    -webkit-appearance:none;
-
-    margin:0;
-
-}
-
-#sellCount{
-
-    -moz-appearance:textfield;
-
-    appearance:textfield;
-
-}
-
-.popupBtns{
-
-    display:flex;
-
-    gap:15px;
-
-}
-
-.popupBtns button{
-
-    flex:1;
-
-    height:52px;
-
-    border:none;
-
-    border-radius:12px;
-
-    font-size:20px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-}
-
-#cancelSell{
-
-    background:#555;
+    background:rgba(0,0,0,.45);
 
     color:white;
 
 }
 
-#confirmSell{
+.categoryBtn.active{
 
     background:#3b82f6;
-
-    color:white;
 
 }
