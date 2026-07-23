@@ -422,3 +422,70 @@ h1 {
     font-size: 22px;
 
 }
+
+/* ======================
+   장비 세부 탭
+====================== */
+
+#equipmentTabs {
+
+    display: none;
+
+    width: 900px;
+    max-width: 90%;
+
+    margin: 18px auto 25px;
+
+    background: #252525;
+
+    border-radius: 16px;
+
+    overflow: hidden;
+
+}
+
+
+/* 세부 탭 버튼 */
+
+.equipmentTab {
+
+    flex: 1;
+
+    padding: 18px 10px;
+
+    border: none;
+
+    background: transparent;
+
+    color: #aaa;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+/* 마우스 */
+
+.equipmentTab:hover {
+
+    background: rgba(255, 255, 255, .05);
+
+    color: white;
+
+}
+
+
+/* 선택된 탭 */
+
+.equipmentTab.active {
+
+    background: #F7C843;
+
+    color: #111;
+
+}

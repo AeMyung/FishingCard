@@ -80,6 +80,35 @@ const sb = window.supabase.createClient(
     list.innerHTML = "";
 
     // ======================
+    // 장비 세부 탭
+    // ======================
+
+    const equipmentTabs =
+        document.getElementById(
+            "equipmentTabs"
+        );
+
+    const rodTab =
+        document.getElementById(
+            "rodTab"
+        );
+
+    const baitTab =
+        document.getElementById(
+            "baitTab"
+        );
+
+    const accessoryTab =
+        document.getElementById(
+            "accessoryTab"
+        );
+
+
+    // 현재 선택된 장비 종류
+    let selectedEquipmentType =
+        "rod";
+
+    // ======================
     // 아이템 출력
     // ======================
     function loadFish() {
@@ -130,26 +159,131 @@ const sb = window.supabase.createClient(
 
     }
 
-    function loadItem() {
+    // ======================
+    // 장비 출력
+    // ======================
 
-        list.style.display = "block";
+    function loadItem(
+        type = selectedEquipmentType
+    ) {
 
-        list.innerHTML = "";
+        selectedEquipmentType =
+            type;
+
+        list.style.display =
+            "block";
+
+        list.innerHTML =
+            "";
 
 
         // ======================
-        // 보유 장비 없음
+        // 해당 종류만 가져오기
+        // ======================
+
+        const filteredInventory =
+            itemInventory.filter(
+                inventoryItem =>
+                    inventoryItem.item_type ===
+                    type
+            );
+
+
+        // ======================
+        // item.js 기준 출력 순서
+        // ======================
+
+        let dataOrder = [];
+
+
+        if (type === "rod") {
+
+            dataOrder =
+                RodData;
+
+        }
+
+        else if (type === "bait") {
+
+            dataOrder =
+                BaitData;
+
+        }
+
+        else if (type === "accessory") {
+
+            dataOrder =
+                AccessoryData;
+
+        }
+
+
+        // ======================
+        // item.js 순서대로 정렬
+        // ======================
+
+        filteredInventory.sort(
+            (a, b) => {
+
+                const aIndex =
+                    dataOrder.findIndex(
+                        item =>
+                            item.id ===
+                            a.item_id
+                    );
+
+                const bIndex =
+                    dataOrder.findIndex(
+                        item =>
+                            item.id ===
+                            b.item_id
+                    );
+
+                return aIndex - bIndex;
+
+            }
+        );
+
+
+        // ======================
+        // 보유 아이템 없음
         // ======================
 
         if (
-            !itemInventory ||
-            itemInventory.length === 0
+            filteredInventory.length === 0
         ) {
+
+            let typeName = "";
+
+
+            if (type === "rod") {
+
+                typeName =
+                    "낚싯대";
+
+            }
+
+            else if (type === "bait") {
+
+                typeName =
+                    "미끼";
+
+            }
+
+            else {
+
+                typeName =
+                    "장신구";
+
+            }
+
 
             list.innerHTML = `
 
             <h2 class="emptyMessage">
-                보유한 장비가 없습니다.
+
+                보유한 ${typeName}가 없습니다.
+
             </h2>
 
         `;
@@ -160,10 +294,13 @@ const sb = window.supabase.createClient(
 
 
         // ======================
-        // 장비 출력
+        // 아이템 출력
         // ======================
 
-        for (const inventoryItem of itemInventory) {
+        for (
+            const inventoryItem
+            of filteredInventory
+        ) {
 
             const item =
                 ItemData.find(
@@ -171,6 +308,7 @@ const sb = window.supabase.createClient(
                         x.id ===
                         inventoryItem.item_id
                 );
+
 
             if (!item)
                 continue;
@@ -185,29 +323,28 @@ const sb = window.supabase.createClient(
                 "item";
 
 
+            let rightInfo =
+                "";
+
+
             // ======================
-            // 오른쪽 정보
-            // ======================
-
-            let rightInfo = "";
-
-
             // 낚싯대
-            if (
-                inventoryItem.item_type ===
-                "rod"
-            ) {
+            // ======================
+
+            if (type === "rod") {
 
                 rightInfo = `
 
                 <div class="durability">
 
-                    내구도<br>
+                    내구도
 
                     <strong>
+
                         ${inventoryItem.durability}
                         /
                         ${item.maxDurability}
+
                     </strong>
 
                 </div>
@@ -217,16 +354,18 @@ const sb = window.supabase.createClient(
             }
 
 
+            // ======================
             // 미끼
-            else if (
-                inventoryItem.item_type ===
-                "bait"
-            ) {
+            // ======================
+
+            else if (type === "bait") {
 
                 rightInfo = `
 
                 <div class="count">
+
                     x${inventoryItem.count}
+
                 </div>
 
             `;
@@ -234,28 +373,34 @@ const sb = window.supabase.createClient(
             }
 
 
+            // ======================
             // 장신구
+            // ======================
+
             else if (
-                inventoryItem.item_type ===
-                "accessory"
+                type === "accessory"
             ) {
 
                 rightInfo = `
 
-                    <button
-                        class="equipBtn
-                        ${inventoryItem.equipped ? "equipped" : ""}"
-                        data-id="${inventoryItem.id}"
-                    >
-
+                <button
+                    class="
+                        equipBtn
                         ${inventoryItem.equipped
+                        ? "equipped"
+                        : ""
+                    }
+                    "
+                >
+
+                    ${inventoryItem.equipped
                         ? "착용 해제"
                         : "착용"
                     }
 
-                    </button>
+                </button>
 
-                `;
+            `;
 
             }
 
@@ -286,12 +431,13 @@ const sb = window.supabase.createClient(
 
         `;
 
+
             // ======================
-            // 장신구 착용 / 해제
+            // 장신구 착용 버튼
             // ======================
 
             if (
-                inventoryItem.item_type ===
+                type ===
                 "accessory"
             ) {
 
@@ -299,6 +445,7 @@ const sb = window.supabase.createClient(
                     div.querySelector(
                         ".equipBtn"
                     );
+
 
                 equipBtn.onclick =
                     async () => {
@@ -318,69 +465,91 @@ const sb = window.supabase.createClient(
 
         }
 
-        // ======================
-        // 장신구 착용 / 해제
-        // ======================
+    }
 
-        async function toggleAccessory(
-            inventoryItem
-        ) {
+    // ======================
+    // 장신구 착용 / 해제
+    // ======================
 
-            const newEquipped =
-                !inventoryItem.equipped;
+    async function toggleAccessory(
+        inventoryItem
+    ) {
 
-
-            const { error } =
-                await sb
-                    .from("item_inventory")
-                    .update({
-
-                        equipped:
-                            newEquipped
-
-                    })
-                    .eq(
-                        "id",
-                        inventoryItem.id
-                    )
-                    .eq(
-                        "member_code",
-                        memberCode
-                    )
-                    .eq(
-                        "item_type",
-                        "accessory"
-                    );
+        const newEquipped =
+            !inventoryItem.equipped;
 
 
-            if (error) {
+        const { error } =
+            await sb
+                .from("item_inventory")
+                .update({
 
-                console.error(error);
+                    equipped:
+                        newEquipped
 
-                alert(
-                    "장신구 상태 변경 중 오류가 발생했습니다."
+                })
+                .eq(
+                    "id",
+                    inventoryItem.id
+                )
+                .eq(
+                    "member_code",
+                    memberCode
+                )
+                .eq(
+                    "item_type",
+                    "accessory"
                 );
 
-                return;
 
-            }
+        if (error) {
 
+            console.error(error);
 
-            // ======================
-            // JS 데이터도 변경
-            // ======================
+            alert(
+                "장신구 상태 변경 중 오류가 발생했습니다."
+            );
 
-            inventoryItem.equipped =
-                newEquipped;
-
-
-            // ======================
-            // 장비 목록 다시 출력
-            // ======================
-
-            loadItem();
+            return;
 
         }
+
+
+        inventoryItem.equipped =
+            newEquipped;
+
+
+        // 현재 장신구 탭 다시 출력
+        loadItem(
+            "accessory"
+        );
+
+    }
+
+    // ======================
+    // 장비 세부 탭 선택
+    // ======================
+
+    function setEquipmentTab(
+        selectedTab
+    ) {
+
+        rodTab.classList.remove(
+            "active"
+        );
+
+        baitTab.classList.remove(
+            "active"
+        );
+
+        accessoryTab.classList.remove(
+            "active"
+        );
+
+
+        selectedTab.classList.add(
+            "active"
+        );
 
     }
 
@@ -404,6 +573,9 @@ const sb = window.supabase.createClient(
             "active"
         );
 
+        equipmentTabs.style.display =
+            "none";
+
         loadFish();
 
     };
@@ -418,7 +590,73 @@ const sb = window.supabase.createClient(
             "active"
         );
 
-        loadItem();
+
+        // 장비 세부 탭 표시
+        equipmentTabs.style.display =
+            "flex";
+
+
+        // 장비를 처음 열면 낚싯대
+        selectedEquipmentType =
+            "rod";
+
+        setEquipmentTab(
+            rodTab
+        );
+
+        loadItem(
+            "rod"
+        );
+
+    };
+
+    // ======================
+    // 낚싯대 탭
+    // ======================
+
+    rodTab.onclick = () => {
+
+        setEquipmentTab(
+            rodTab
+        );
+
+        loadItem(
+            "rod"
+        );
+
+    };
+
+
+    // ======================
+    // 미끼 탭
+    // ======================
+
+    baitTab.onclick = () => {
+
+        setEquipmentTab(
+            baitTab
+        );
+
+        loadItem(
+            "bait"
+        );
+
+    };
+
+
+    // ======================
+    // 장신구 탭
+    // ======================
+
+    accessoryTab.onclick = () => {
+
+        setEquipmentTab(
+            accessoryTab
+        );
+
+        loadItem(
+            "accessory"
+        );
 
     };
 })();
