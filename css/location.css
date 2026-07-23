@@ -228,3 +228,324 @@ body {
 
     cursor: pointer;
 }
+
+/* ======================
+   낚시도구 팝업
+====================== */
+
+#toolPopup {
+
+    display: none;
+
+    position: fixed;
+
+    inset: 0;
+
+    background: rgba(0, 0, 0, .65);
+
+    z-index: 1000;
+
+    align-items: center;
+    justify-content: center;
+
+}
+
+
+#toolWindow {
+
+    width: 700px;
+    max-width: 90%;
+
+    max-height: 80vh;
+
+    overflow-y: auto;
+
+    padding: 35px;
+
+    background: #182235;
+
+    border-radius: 25px;
+
+    color: white;
+
+}
+
+
+#toolWindow h1 {
+
+    margin-top: 0;
+    margin-bottom: 30px;
+
+    text-align: center;
+
+}
+
+
+.toolSection {
+
+    margin-bottom: 30px;
+
+}
+
+
+.toolSection h2 {
+
+    margin-bottom: 15px;
+
+    color: #F7C843;
+
+}
+
+
+/* ======================
+   장비 목록
+====================== */
+
+.toolItemList {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 12px;
+
+}
+
+
+.toolItem {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    padding: 15px;
+
+    border: 2px solid transparent;
+
+    border-radius: 16px;
+
+    background: rgba(255, 255, 255, .08);
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+.toolItem:hover {
+
+    background: rgba(255, 255, 255, .14);
+
+}
+
+
+.toolItem.selected {
+
+    border-color: #F7C843;
+
+    background: rgba(247, 200, 67, .13);
+
+}
+
+
+.toolItem img {
+
+    width: 70px;
+    height: 70px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+}
+
+
+.toolItemInfo {
+
+    flex: 1;
+
+}
+
+
+.toolItemName {
+
+    margin-bottom: 7px;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+}
+
+
+.toolItemDesc {
+
+    color: #bbb;
+
+    font-size: 15px;
+
+}
+
+
+.toolItemState {
+
+    margin-left: 15px;
+
+    color: #F7C843;
+
+    font-size: 17px;
+
+    font-weight: bold;
+
+}
+
+
+/* ======================
+   적용 / 취소
+====================== */
+
+.toolButtons {
+
+    display: flex;
+
+    gap: 15px;
+
+    margin-top: 30px;
+
+}
+
+
+.toolButtons button {
+
+    flex: 1;
+
+    padding: 16px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    font-size: 19px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+}
+
+
+#toolApplyBtn {
+
+    background: #F7C843;
+
+    color: #111;
+
+}
+
+
+#toolCancelBtn {
+
+    background: #4a5568;
+
+    color: white;
+
+}
+
+/* ======================
+   낚시도구 스크롤바 숨김
+====================== */
+
+#toolWindow {
+
+    scrollbar-width: none;
+
+}
+
+#toolWindow::-webkit-scrollbar {
+
+    display: none;
+
+}
+
+/* ======================
+   현재 선택된 낚시도구
+====================== */
+
+.toolCurrent {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 18px;
+
+    min-height: 80px;
+
+    padding: 15px;
+
+    background: rgba(255, 255, 255, .08);
+
+    border: 2px solid rgba(247, 200, 67, .55);
+
+    border-radius: 16px;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+.toolCurrent:hover {
+
+    background: rgba(255, 255, 255, .14);
+
+    border-color: #F7C843;
+
+}
+
+
+.toolCurrent img {
+
+    width: 70px;
+    height: 70px;
+
+    object-fit: cover;
+
+    border-radius: 10px;
+
+}
+
+
+.toolCurrent.empty {
+
+    color: #aaa;
+
+}
+
+
+.toolArrow {
+
+    margin-left: 10px;
+
+    color: #F7C843;
+
+    font-size: 18px;
+
+}
+
+
+/* 펼쳐진 목록 */
+
+.toolItemList {
+
+    display: flex;
+
+    flex-direction: column;
+
+    gap: 8px;
+
+}

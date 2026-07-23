@@ -14,7 +14,7 @@
 
 <body>
 
-    <a class="home" href="../main/main.html">◀  월드맵</a>
+    <a class="home" href="../main/main.html">◀ 월드맵</a>
 
     <div class="panel">
 
@@ -24,10 +24,8 @@
 
         </button>
 
-        <button class="menuBtn">
-
+        <button id="toolBtn" class="menuBtn">
             🧰 낚시도구
-
         </button>
 
         <button id="inventoryBtn" class="menuBtn">
@@ -57,13 +55,59 @@
 
     </div>
 
+    <!-- ======================
+     낚시도구 설정 팝업
+====================== -->
+
+    <div id="toolPopup">
+
+        <div id="toolWindow">
+
+            <h1>🧰 낚시도구 설정</h1>
+
+
+            <!-- 낚싯대 -->
+            <div class="toolSection">
+
+                <h2>낚싯대</h2>
+
+                <div id="rodList" class="toolItemList"></div>
+
+            </div>
+
+
+            <!-- 미끼 -->
+            <div class="toolSection">
+
+                <h2>미끼</h2>
+
+                <div id="baitList" class="toolItemList"></div>
+
+            </div>
+
+
+            <div class="toolButtons">
+
+                <button id="toolApplyBtn">
+                    적용
+                </button>
+
+                <button id="toolCancelBtn">
+                    취소
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
     <script src="../config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 
     <script src="../data/fish.js"></script>
+    <script src="../data/item.js"></script>
     <script src="location.js"></script>
-
-    </script>
 
 </body>
 
