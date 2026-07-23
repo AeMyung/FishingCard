@@ -31,6 +31,8 @@ const RodData = [
 
         id: "basic_rod",
 
+        type: "rod",
+
         name: "기본 낚싯대",
 
         description:
@@ -61,6 +63,8 @@ const RodData = [
     {
 
         id: "speed_rod",
+
+        type: "rod",
 
         name: "숙련자의 낚싯대",
 
@@ -93,6 +97,8 @@ const RodData = [
 
         id: "double_rod",
 
+        type: "rod",
+
         name: "풍요의 낚싯대",
 
         description:
@@ -123,6 +129,8 @@ const RodData = [
     {
 
         id: "auto_rod",
+
+        type: "rod",
 
         name: "자동 낚싯대",
 
@@ -163,6 +171,8 @@ const BaitData = [
 
         id: "worm",
 
+        type: "bait",
+
         name: "지렁이",
 
         description:
@@ -174,7 +184,7 @@ const BaitData = [
 
             sell: true,
 
-            price: 100
+            price: 10
 
         },
 
@@ -194,6 +204,8 @@ const BaitData = [
 
         id: "shrimp",
 
+        type: "bait",
+
         name: "새우 미끼",
 
         description:
@@ -205,7 +217,7 @@ const BaitData = [
 
             sell: true,
 
-            price: 500
+            price: 50
 
         },
 
@@ -232,6 +244,8 @@ const AccessoryData = [
     {
 
         id: "gold_ring",
+
+        type: "accessory",
 
         name: "황금 반지",
 

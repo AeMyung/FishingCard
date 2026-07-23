@@ -36,6 +36,44 @@ const baitTab = document.getElementById("baitTab");
 
 const accessoryTab = document.getElementById("accessoryTab");
 
+const detailPopup = document.getElementById("detailPopup");
+
+const detailImage = document.getElementById("detailImage");
+
+const detailTitle = document.getElementById("detailTitle");
+
+const detailDescription = document.getElementById("detailDescription");
+
+const detailDurability = document.getElementById("detailDurability");
+
+const closeDetail = document.getElementById("closeDetail");
+
+const baitBuyPopup = document.getElementById("baitBuyPopup");
+
+const baitBuyImage = document.getElementById("baitBuyImage");
+
+const baitBuyTitle = document.getElementById("baitBuyTitle");
+
+const baitUnitPrice = document.getElementById("baitUnitPrice");
+
+const baitBuyCount = document.getElementById("baitBuyCount");
+
+const baitTotalPrice = document.getElementById("baitTotalPrice");
+
+const baitMinBtn = document.getElementById("baitMinBtn");
+
+const baitMinusBtn = document.getElementById("baitMinusBtn");
+
+const baitPlusBtn = document.getElementById("baitPlusBtn");
+
+const baitMaxBtn = document.getElementById("baitMaxBtn");
+
+const confirmBaitBuy = document.getElementById("confirmBaitBuy");
+
+const cancelBaitBuy = document.getElementById("cancelBaitBuy");
+
+let selectedBait = null;
+
 let selectedBuyItem = null;
 
 let selectedItem = null;
@@ -297,6 +335,12 @@ function loadBuyRod() {
 
         `;
 
+        div.querySelector(".detailBtn").onclick = () => {
+
+            showDetail(rod);
+
+        };
+
         div.querySelector(".buyBtn").onclick = () => {
 
             selectedBuyItem = rod;
@@ -328,26 +372,258 @@ function loadBuyBait() {
             "shopList"
         );
 
-    shopList.innerHTML = `
-        <h2 style="text-align:center;">
-            준비중입니다.
-        </h2>
-    `;
+    shopList.style.display = "block";
+
+    shopList.innerHTML = "";
+
+    for (const bait of BaitData) {
+
+        if (!bait.shop.sell)
+            continue;
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.className =
+            "shopItem";
+
+        div.innerHTML = `
+
+            <img src="../images/${bait.image}">
+
+            <div class="info">
+
+                <div class="name">
+
+                    ${bait.name}
+
+                </div>
+
+                <div class="price">
+
+                    구매가 : ${bait.shop.price.toLocaleString()} G
+
+                </div>
+
+            </div>
+
+            <div class="buyBtns">
+
+                <button class="detailBtn">
+
+                    상세
+
+                </button>
+
+                <button class="buyBtn">
+
+                    구매
+
+                </button>
+
+            </div>
+
+        `;
+
+        div.querySelector(".detailBtn").onclick = () => {
+
+            showDetail(bait);
+
+        };
+
+        div.querySelector(".buyBtn").onclick = () => {
+
+            selectedBait = bait;
+
+            baitBuyImage.src =
+                `../images/${bait.image}`;
+
+            baitBuyTitle.innerHTML =
+                bait.name;
+
+            baitUnitPrice.innerHTML =
+                `개당 ${bait.shop.price.toLocaleString()} G`;
+
+            baitBuyCount.value = 1;
+
+            updateBaitTotalPrice();
+
+            baitBuyPopup.style.display =
+                "flex";
+
+        };
+
+        shopList.appendChild(div);
+
+    }
 
 }
 
-function loadBuyAccessory() {
+// ======================
+// 장신구 구매 목록
+// ======================
 
-    const shopList =
-        document.getElementById(
-            "shopList"
+async function loadBuyAccessory() {
+
+    shopList.innerHTML = "";
+
+    // ======================
+    // 내가 보유한 장신구 조회
+    // ======================
+
+    const {
+        data: ownedAccessories,
+        error
+    } = await sb
+        .from("item_inventory")
+        .select("item_id")
+        .eq("member_code", memberCode)
+        .eq("item_type", "accessory");
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "보유 장신구 정보를 불러오지 못했습니다."
         );
 
-    shopList.innerHTML = `
-        <h2 style="text-align:center;">
-            준비중입니다.
-        </h2>
-    `;
+        return;
+
+    }
+
+
+    // ======================
+    // 보유 장신구 ID 목록
+    // ======================
+
+    const ownedIds =
+        new Set(
+            ownedAccessories.map(
+                item => item.item_id
+            )
+        );
+
+
+    // ======================
+    // 판매 중인 장신구
+    // ======================
+
+    const accessories =
+        AccessoryData.filter(
+            item =>
+                item.shop?.sell === true
+        );
+
+
+    // ======================
+    // 장신구 출력
+    // ======================
+
+    for (const accessory of accessories) {
+
+        const owned =
+            ownedIds.has(
+                accessory.id
+            );
+
+
+        const div =
+            document.createElement(
+                "div"
+            );
+
+        div.className =
+            "shopItem";
+
+
+        div.innerHTML = `
+
+            <img
+                src="../images/${accessory.image}"
+            >
+
+            <div class="info">
+
+                <div class="name">
+                    ${accessory.name}
+                </div>
+
+                <div class="price">
+                    구매가 :
+                    ${accessory.shop.price.toLocaleString()} G
+                </div>
+
+            </div>
+
+
+            <button class="detailBtn">
+                상세
+            </button>
+
+
+            <button
+                class="buyBtn ${owned ? "purchased" : ""}"
+                ${owned ? "disabled" : ""}
+            >
+                ${owned ? "구매 완료" : "구매"}
+            </button>
+        `;
+
+
+        // ======================
+        // 상세 버튼
+        // ======================
+
+        div.querySelector(
+            ".detailBtn"
+        ).onclick = () => {
+
+            showDetail(
+                accessory
+            );
+
+        };
+
+
+        // ======================
+        // 구매 버튼
+        // ======================
+
+        if (!owned) {
+
+            div.querySelector(
+                ".buyBtn"
+            ).onclick = () => {
+
+                selectedBuyItem =
+                    accessory;
+
+                buyImage.src =
+                    `../images/${accessory.image}`;
+
+                buyTitle.innerHTML =
+                    accessory.name;
+
+                buyPrice.innerHTML =
+                    `${accessory.shop.price.toLocaleString()} G`;
+
+                buyPopup.style.display =
+                    "flex";
+
+            };
+
+        }
+
+
+        shopList.appendChild(
+            div
+        );
+
+    }
 
 }
 
@@ -585,6 +861,143 @@ cancelBuy.onclick = () => {
 
 };
 
+// ======================
+// 낚싯대 / 장신구 구매 확정
+// ======================
+
+confirmBuy.onclick = async () => {
+
+    if (!selectedBuyItem)
+        return;
+
+    // ======================
+    // 화면상 골드 검사
+    // ======================
+
+    if (
+        selectedBuyItem.shop.price >
+        player.gold
+    ) {
+
+        alert(
+            "보유 골드가 부족합니다."
+        );
+
+        return;
+
+    }
+
+    // ======================
+    // DB 구매 처리
+    // ======================
+
+    const { data, error } =
+        await sb.rpc(
+            "buy_shop_item",
+            {
+
+                p_member_code:
+                    memberCode,
+
+                p_item_id:
+                    selectedBuyItem.id,
+
+                p_count:
+                    1
+
+            }
+        );
+
+    // ======================
+    // 오류 처리
+    // ======================
+
+    if (error) {
+
+        console.error(error);
+
+        if (
+            error.message.includes(
+                "NOT_ENOUGH_GOLD"
+            )
+        ) {
+
+            alert(
+                "보유 골드가 부족합니다."
+            );
+
+        }
+
+        else if (
+            error.message.includes(
+                "ITEM_NOT_FOR_SALE"
+            )
+        ) {
+
+            alert(
+                "현재 구매할 수 없는 아이템입니다."
+            );
+
+        }
+
+        else {
+
+            alert(
+                "구매 중 오류가 발생했습니다."
+            );
+
+        }
+
+        return;
+
+    }
+
+    // ======================
+    // DB에서 반환된 골드 적용
+    // ======================
+
+    player.gold =
+        Number(data);
+
+    document.getElementById(
+        "goldBox"
+    ).innerHTML =
+        `💰 ${player.gold.toLocaleString()} G`;
+
+    // ======================
+    // 구매 완료
+    // ======================
+
+    const itemName =
+        selectedBuyItem.name;
+
+    const itemType =
+        selectedBuyItem.type;
+
+
+    buyPopup.style.display =
+        "none";
+
+    selectedBuyItem = null;
+
+
+    // ======================
+    // 장신구 구매 목록 갱신
+    // ======================
+
+    if (itemType === "accessory") {
+
+        await loadBuyAccessory();
+
+    }
+
+
+    alert(
+        `${itemName}을(를) 구매했습니다.`
+    );
+
+};
+
 rodTab.onclick = () => {
 
     rodTab.classList.add("active");
@@ -618,5 +1031,313 @@ accessoryTab.onclick = () => {
     baitTab.classList.remove("active");
 
     loadBuyAccessory();
+
+};
+
+function showDetail(item) {
+
+    detailImage.src =
+        `../images/${item.image}`;
+
+    detailTitle.innerHTML =
+        item.name;
+
+    detailDescription.innerHTML =
+        item.description;
+
+    // 낚싯대처럼 maxDurability가 있는 아이템만 표시
+    if (item.maxDurability !== undefined) {
+
+        detailDurability.innerHTML =
+            `내구도 : ${item.maxDurability}`;
+
+        detailDurability.style.display =
+            "block";
+
+    }
+
+    else {
+
+        detailDurability.style.display =
+            "none";
+
+    }
+
+    detailPopup.style.display =
+        "flex";
+
+}
+
+closeDetail.onclick = () => {
+
+    detailPopup.style.display =
+        "none";
+
+};
+
+function updateBaitTotalPrice() {
+
+    if (!selectedBait)
+        return;
+
+    let count =
+        Number(baitBuyCount.value);
+
+    if (!count || count < 1)
+        count = 1;
+
+    const total =
+        selectedBait.shop.price * count;
+
+    baitTotalPrice.innerHTML =
+        `총 가격 : ${total.toLocaleString()} G`;
+
+}
+
+baitMinBtn.onclick = () => {
+
+    baitBuyCount.value = 1;
+
+    updateBaitTotalPrice();
+
+};
+
+baitMinusBtn.onclick = () => {
+
+    let count =
+        Number(baitBuyCount.value);
+
+    if (count > 1) {
+
+        baitBuyCount.value =
+            count - 1;
+
+    }
+
+    updateBaitTotalPrice();
+
+};
+
+baitPlusBtn.onclick = () => {
+
+    let count =
+        Number(baitBuyCount.value);
+
+    if (!count || count < 1)
+        count = 1;
+
+    baitBuyCount.value =
+        count + 1;
+
+    updateBaitTotalPrice();
+
+};
+
+baitMaxBtn.onclick = () => {
+
+    if (!selectedBait)
+        return;
+
+    const maxCount =
+        Math.floor(
+            player.gold /
+            selectedBait.shop.price
+        );
+
+    if (maxCount < 1) {
+
+        baitBuyCount.value = 1;
+
+    }
+
+    else {
+
+        baitBuyCount.value =
+            maxCount;
+
+    }
+
+    updateBaitTotalPrice();
+
+};
+
+baitBuyCount.addEventListener(
+    "input",
+    () => {
+
+        baitBuyCount.value =
+            baitBuyCount.value.replace(
+                /[^0-9]/g,
+                ""
+            );
+
+        updateBaitTotalPrice();
+
+    }
+);
+
+cancelBaitBuy.onclick = () => {
+
+    baitBuyPopup.style.display =
+        "none";
+
+    selectedBait = null;
+
+};
+
+// ======================
+// 미끼 구매 확정
+// ======================
+
+confirmBaitBuy.onclick = async () => {
+
+    if (!selectedBait)
+        return;
+
+    const count =
+        Number(baitBuyCount.value);
+
+    // ======================
+    // 1. 수량 검사
+    // ======================
+
+    if (!count || count < 1) {
+
+        alert(
+            "1개 이상 구매해야 합니다."
+        );
+
+        return;
+
+    }
+
+    // ======================
+    // 화면상 총 가격 계산
+    // ======================
+
+    const totalPrice =
+        selectedBait.shop.price *
+        count;
+
+    // ======================
+    // 2. 화면상 골드 검사
+    // ======================
+
+    if (totalPrice > player.gold) {
+
+        alert(
+            "보유 골드가 부족합니다.\n\n" +
+            `필요 골드 : ${totalPrice.toLocaleString()} G\n` +
+            `보유 골드 : ${player.gold.toLocaleString()} G`
+        );
+
+        return;
+
+    }
+
+    // ======================
+    // DB 구매 처리
+    // ======================
+
+    const { data, error } =
+        await sb.rpc(
+            "buy_shop_item",
+            {
+
+                p_member_code:
+                    memberCode,
+
+                p_item_id:
+                    selectedBait.id,
+
+                p_count:
+                    count
+
+            }
+        );
+
+    // ======================
+    // 오류 처리
+    // ======================
+
+    if (error) {
+
+        console.error(error);
+
+        if (
+            error.message.includes(
+                "NOT_ENOUGH_GOLD"
+            )
+        ) {
+
+            alert(
+                "보유 골드가 부족합니다."
+            );
+
+        }
+
+        else if (
+            error.message.includes(
+                "INVALID_COUNT"
+            )
+        ) {
+
+            alert(
+                "구매 수량이 올바르지 않습니다."
+            );
+
+        }
+
+        else if (
+            error.message.includes(
+                "ITEM_NOT_FOR_SALE"
+            )
+        ) {
+
+            alert(
+                "현재 구매할 수 없는 아이템입니다."
+            );
+
+        }
+
+        else {
+
+            alert(
+                "구매 중 오류가 발생했습니다."
+            );
+
+        }
+
+        return;
+
+    }
+
+    // ======================
+    // DB에서 반환된 골드 적용
+    // ======================
+
+    player.gold =
+        Number(data);
+
+    document.getElementById(
+        "goldBox"
+    ).innerHTML =
+        `💰 ${player.gold.toLocaleString()} G`;
+
+    // ======================
+    // 구매 완료
+    // ======================
+
+    const baitName =
+        selectedBait.name;
+
+    baitBuyPopup.style.display =
+        "none";
+
+    selectedBait = null;
+
+    alert(
+        `${baitName} ${count}개를 구매했습니다.`
+    );
 
 };

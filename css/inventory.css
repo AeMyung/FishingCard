@@ -136,7 +136,7 @@ h1 {
 
     padding-right: 10px;
 
-    display:none;
+    display: none;
 }
 
 #inventoryList::-webkit-scrollbar {
@@ -310,5 +310,115 @@ h1 {
     background: #F7C843;
 
     color: black;
+
+}
+
+/* ======================
+   낚싯대 내구도
+====================== */
+
+.durability {
+
+    min-width: 100px;
+
+    margin-left: 20px;
+
+    text-align: center;
+
+    color: #cccccc;
+
+    font-size: 16px;
+
+}
+
+.durability strong {
+
+    display: block;
+
+    margin-top: 5px;
+
+    color: #F7C843;
+
+    font-size: 22px;
+
+}
+
+/* ======================
+   장신구 착용 버튼
+====================== */
+
+.equipBtn {
+
+    min-width: 120px;
+
+    height: 55px;
+
+    margin-left: 20px;
+
+    border: none;
+
+    border-radius: 14px;
+
+    background: #F7C843;
+
+    color: #111;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: .2s;
+
+}
+
+
+/* 마우스 올렸을 때 */
+
+.equipBtn:hover {
+
+    transform: translateY(-2px);
+
+    filter: brightness(1.08);
+
+}
+
+
+/* ======================
+   현재 착용 중
+====================== */
+
+.equipBtn.equipped {
+
+    background: rgba(255, 255, 255, .12);
+
+    color: #ddd;
+
+    border: 1px solid rgba(255, 255, 255, .15);
+
+}
+
+
+.equipBtn.equipped:hover {
+
+    background: rgba(255, 255, 255, .2);
+
+}
+
+
+/* ======================
+   빈 인벤토리
+====================== */
+
+.emptyMessage {
+
+    text-align: center;
+
+    margin-top: 60px;
+
+    color: #aaaaaa;
+
+    font-size: 22px;
 
 }

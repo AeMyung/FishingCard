@@ -161,6 +161,80 @@
 
     </div>
 
+    <div id="detailPopup">
+
+        <div class="detailPopupBox">
+
+            <img id="detailImage">
+
+            <h2 id="detailTitle"></h2>
+
+            <div id="detailDescription"></div>
+
+            <div id="detailDurability"></div>
+
+            <button id="closeDetail">
+                닫기
+            </button>
+
+        </div>
+
+    </div>
+
+    <div id="baitBuyPopup">
+
+        <div class="popup baitBuyPopupBox">
+
+            <img id="baitBuyImage">
+
+            <h2 id="baitBuyTitle"></h2>
+
+            <div id="baitUnitPrice"></div>
+
+            <h3>구매할 수량</h3>
+
+            <div class="countControl">
+
+                <button id="baitMinBtn">
+                    1
+                </button>
+
+                <button id="baitMinusBtn">
+                    -
+                </button>
+
+                <input id="baitBuyCount" type="text" value="1" inputmode="numeric">
+
+                <button id="baitPlusBtn">
+                    +
+                </button>
+
+                <button id="baitMaxBtn">
+                    MAX
+                </button>
+
+            </div>
+
+            <div id="baitTotalPrice">
+                총 가격 : 0 G
+            </div>
+
+            <div class="popupBtns">
+
+                <button id="confirmBaitBuy">
+                    구매
+                </button>
+
+                <button id="cancelBaitBuy">
+                    취소
+                </button>
+
+            </div>
+
+        </div>
+
+    </div>
+
     <script src="../config.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
 

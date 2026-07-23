@@ -615,44 +615,405 @@ h1 {
 
 }
 
-#buyCategory{
+#buyCategory {
 
-    display:none;
+    display: none;
 
-    width:900px;
+    width: 900px;
 
-    margin:15px auto;
+    margin: 15px auto;
 
-    gap:10px;
+    gap: 10px;
 
-    justify-content:center;
-
-}
-
-.categoryBtn{
-
-    flex:1;
-
-    height:50px;
-
-    border:none;
-
-    border-radius:15px;
-
-    font-size:22px;
-
-    font-weight:bold;
-
-    cursor:pointer;
-
-    background:rgba(0,0,0,.45);
-
-    color:white;
+    justify-content: center;
 
 }
 
-.categoryBtn.active{
+.categoryBtn {
 
-    background:#3b82f6;
+    flex: 1;
+
+    height: 50px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    background: rgba(0, 0, 0, .45);
+
+    color: white;
+
+}
+
+.categoryBtn.active {
+
+    background: #3b82f6;
+
+}
+
+#detailPopup {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+.detailPopupBox {
+
+    width: 500px;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    background: #1b263b;
+
+    text-align: center;
+
+    color: white;
+}
+
+#detailImage {
+
+    width: 150px;
+    height: 150px;
+
+    object-fit: contain;
+
+    margin-bottom: 15px;
+}
+
+#detailTitle {
+
+    margin: 5px 0 20px;
+
+    font-size: 32px;
+}
+
+#detailDescription {
+
+    font-size: 20px;
+
+    line-height: 1.6;
+
+    margin-bottom: 15px;
+}
+
+#detailDurability {
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    color: #ffd54a;
+
+    margin-bottom: 25px;
+}
+
+#closeDetail {
+
+    width: 180px;
+    height: 55px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    background: #3b82f6;
+
+    color: white;
+
+    font-size: 20px;
+    font-weight: bold;
+
+    cursor: pointer;
+}
+
+/* ======================
+   미끼 구매 팝업
+====================== */
+
+#baitBuyPopup {
+
+    display: none;
+
+    position: fixed;
+
+    left: 0;
+    top: 0;
+
+    width: 100%;
+    height: 100%;
+
+    background: rgba(0, 0, 0, 0.65);
+
+    justify-content: center;
+    align-items: center;
+
+    z-index: 1000;
+}
+
+
+/* 팝업 내부 */
+
+.baitBuyPopupBox {
+
+    width: 500px;
+
+    padding: 35px;
+
+    border-radius: 25px;
+
+    background: #1b263b;
+
+    text-align: center;
+
+    color: white;
+
+}
+
+
+/* 미끼 이미지 */
+
+#baitBuyImage {
+
+    width: 140px;
+    height: 140px;
+
+    object-fit: contain;
+
+    display: block;
+
+    margin: 0 auto 15px;
+
+}
+
+
+/* 미끼 이름 */
+
+#baitBuyTitle {
+
+    margin: 5px 0 15px;
+
+    font-size: 30px;
+
+}
+
+
+/* 개당 가격 */
+
+#baitUnitPrice {
+
+    margin-bottom: 25px;
+
+    font-size: 21px;
+
+    font-weight: bold;
+
+    color: gold;
+
+}
+
+
+/* ======================
+   수량 조절
+====================== */
+
+.countControl {
+
+    display: flex;
+
+    justify-content: center;
+    align-items: center;
+
+    gap: 8px;
+
+    margin: 20px 0;
+
+}
+
+
+/* 수량 입력창 */
+
+#baitBuyCount {
+
+    width: 100px;
+    height: 48px;
+
+    border: 1px solid rgba(255, 255, 255, 0.2);
+
+    border-radius: 10px;
+
+    background: rgba(0, 0, 0, 0.3);
+
+    color: white;
+
+    text-align: center;
+
+    font-size: 22px;
+
+    font-weight: bold;
+
+    outline: none;
+
+}
+
+
+/* 수량 버튼 */
+
+#baitMinBtn,
+#baitMinusBtn,
+#baitPlusBtn,
+#baitMaxBtn {
+
+    min-width: 55px;
+    height: 48px;
+
+    padding: 0 12px;
+
+    border: none;
+
+    border-radius: 10px;
+
+    background: rgba(255, 255, 255, 0.12);
+
+    color: white;
+
+    font-size: 18px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+#baitMinBtn:hover,
+#baitMinusBtn:hover,
+#baitPlusBtn:hover,
+#baitMaxBtn:hover {
+
+    background: rgba(255, 255, 255, 0.22);
+
+}
+
+
+/* ======================
+   총 구매 가격
+====================== */
+
+#baitTotalPrice {
+
+    margin: 25px 0;
+
+    font-size: 24px;
+
+    font-weight: bold;
+
+    color: gold;
+
+}
+
+
+/* ======================
+   구매 / 취소 버튼
+====================== */
+
+#confirmBaitBuy,
+#cancelBaitBuy {
+
+    width: 150px;
+    height: 55px;
+
+    border: none;
+
+    border-radius: 15px;
+
+    color: white;
+
+    font-size: 20px;
+
+    font-weight: bold;
+
+    cursor: pointer;
+
+    transition: 0.2s;
+
+}
+
+
+#confirmBaitBuy {
+
+    background: #3b82f6;
+
+}
+
+
+#confirmBaitBuy:hover {
+
+    background: #2563eb;
+
+}
+
+
+#cancelBaitBuy {
+
+    background: #555;
+
+}
+
+
+#cancelBaitBuy:hover {
+
+    background: #666;
+
+}
+
+/* ======================
+   구매 완료 버튼
+====================== */
+
+.buyBtn.purchased {
+
+    background: #555;
+
+    color: #aaa;
+
+    border-color: #666;
+
+    cursor: default;
+
+    opacity: 0.75;
+
+}
+
+.buyBtn.purchased:hover {
+
+    background: #555;
+
+    color: #aaa;
+
+    transform: none;
 
 }
