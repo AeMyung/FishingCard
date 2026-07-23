@@ -29,6 +29,18 @@ if (!memberCode) {
     location.href = "../login/login.html";
 }
 
+const FishingGradeOrder = {
+
+    common: 1,
+    uncommon: 2,
+    rare: 3,
+    epic: 4,
+    legendary: 5,
+    relic: 6,
+    ancient: 7
+
+};
+
 const fishBtn = document.getElementById("fishBtn");
 const miniGame = document.getElementById("miniGame");
 const message = document.getElementById("message");
@@ -68,6 +80,7 @@ let baitListOpen = false;
 let autoCatchTimer = null;
 
 let rodBroken = false;
+let baitDepleted = false;
 let currentRodEffect = null;
 let currentBaitEffect = null;
 
@@ -105,8 +118,104 @@ function getFishByLocation(location) {
 
 function randomFish(location) {
 
-    const list =
-        getFishByLocation(location);
+    // ======================
+    // 현재 지역 출현 목록
+    // ======================
+
+    let list =
+        getFishByLocation(location)
+            .filter(
+                fish =>
+                    fish.id &&
+                    fish.weight > 0
+            )
+            .map(
+                fish => ({
+                    ...fish
+                })
+            );
+
+    // ======================
+    // 미끼 없음 패널티
+    // 쓰레기 가중치 3배
+    // ======================
+
+    if (!currentBaitEffect) {
+
+        list.forEach(fish => {
+
+            if (fish.type === "trash") {
+
+                fish.weight *= 3;
+
+            }
+
+        });
+
+    }
+
+
+    // ======================
+    // 미끼 효과 적용
+    // ======================
+
+    if (currentBaitEffect) {
+
+        // ======================
+        // 등급 확률 증가
+        // ======================
+
+        if (
+            currentBaitEffect.type ===
+            EffectType.GRADE
+        ) {
+
+            const targetGrade =
+                FishingGradeOrder[
+                currentBaitEffect.target
+                ];
+
+
+            list.forEach(fish => {
+
+                // 쓰레기는 등급 미끼 효과 제외
+                if (
+                    fish.type !== "fish"
+                ) {
+
+                    return;
+
+                }
+
+
+                const fishGrade =
+                    FishingGradeOrder[
+                    fish.grade
+                    ];
+
+
+                // target 등급 이상
+                if (
+                    fishGrade >= targetGrade
+                ) {
+
+                    fish.weight *=
+                        1 +
+                        currentBaitEffect.value /
+                        100;
+
+                }
+
+            });
+
+        }
+
+    }
+
+
+    // ======================
+    // 전체 가중치 계산
+    // ======================
 
     const totalWeight =
         list.reduce(
@@ -115,20 +224,47 @@ function randomFish(location) {
             0
         );
 
+
+    if (
+        list.length === 0 ||
+        totalWeight <= 0
+    ) {
+
+        console.error(
+            "낚을 수 있는 물고기가 없습니다."
+        );
+
+        return null;
+
+    }
+
+
+    // ======================
+    // 랜덤 추첨
+    // ======================
+
     let random =
-        Math.random() * totalWeight;
+        Math.random() *
+        totalWeight;
+
 
     for (const fish of list) {
 
-        random -= fish.weight;
+        random -=
+            fish.weight;
+
 
         if (random <= 0) {
+
             return fish;
+
         }
 
     }
 
+
     return list[0];
+
 }
 
 // ======================
@@ -362,6 +498,20 @@ async function successFishing() {
                     return;
                 }
 
+                // ======================
+                // 미끼 소진
+                // ======================
+
+                if (baitDepleted) {
+
+                    baitDepleted = false;
+
+                    alert(
+                        "사용 중인 미끼를 모두 소진했습니다.\n다음 낚시부터 미끼 없이 진행됩니다."
+                    );
+
+                }
+
 
                 // 다음 낚시 자동 시작
                 startFishing();
@@ -394,6 +544,16 @@ function failFishing() {
 
     }
 
+    if (baitDepleted) {
+
+        baitDepleted = false;
+
+        alert(
+            "사용 중인 미끼를 모두 소진했습니다.\n다음 낚시부터 미끼 없이 진행됩니다."
+        );
+
+    }
+
     stopFishing();
 
     isFishing = false;
@@ -420,7 +580,10 @@ closePopup.onclick = () => {
         "none";
 
 
-    // 낚싯대가 이번 낚시에서 부러짐
+    // ======================
+    // 낚싯대 파괴
+    // ======================
+
     if (rodBroken) {
 
         rodBroken = false;
@@ -432,6 +595,21 @@ closePopup.onclick = () => {
         stopFishing();
 
         return;
+    }
+
+
+    // ======================
+    // 미끼 소진
+    // ======================
+
+    if (baitDepleted) {
+
+        baitDepleted = false;
+
+        alert(
+            "사용 중인 미끼를 모두 소진했습니다.\n다음 낚시부터 미끼 없이 진행됩니다."
+        );
+
     }
 
 
@@ -658,6 +836,9 @@ async function consumeFishingTools() {
             selectedBait =
                 null;
 
+            baitDepleted =
+                true;
+
         }
 
         else {
@@ -874,9 +1055,10 @@ function renderRodList() {
 
             <div class="toolItemState">
 
-                ${currentRod.durability}
-                /
-                ${item.maxDurability}
+                ${item.infiniteDurability
+                    ? "∞"
+                    : `${currentRod.durability} / ${item.maxDurability}`
+                }
 
             </div>
 
@@ -961,9 +1143,10 @@ function renderRodList() {
 
             <div class="toolItemState">
 
-                ${inventoryItem.durability}
-                /
-                ${item.maxDurability}
+                ${item.infiniteDurability
+                    ? "∞"
+                    : `${inventoryItem.durability} / ${item.maxDurability}`
+                }
 
             </div>
 

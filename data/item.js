@@ -49,6 +49,8 @@ const RodData = [
         },
 
         maxDurability: 100,
+        infiniteDurability: true,
+
 
         effect: {
 
@@ -227,7 +229,7 @@ const BaitData = [
 
             target: "rare",
 
-            value: 100
+            value: 300
 
         }
 
@@ -250,7 +252,7 @@ const AccessoryData = [
         name: "황금 반지",
 
         description:
-            "물고기 판매 골드가 20% 증가한다.",
+            "아무런 능력이 없다. 그냥 장신구일 뿐이다.",
 
         image: "gold_ring.png",
 

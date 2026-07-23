@@ -333,23 +333,25 @@ const sb = window.supabase.createClient(
 
             if (type === "rod") {
 
+                const durabilityText =
+                    item.infiniteDurability
+                        ? "∞"
+                        : `${inventoryItem.durability} / ${item.maxDurability}`;
+
+
                 rightInfo = `
 
-                <div class="durability">
+                    <div class="durability">
 
-                    내구도
+                        내구도
 
-                    <strong>
+                        <strong>
+                            ${durabilityText}
+                        </strong>
 
-                        ${inventoryItem.durability}
-                        /
-                        ${item.maxDurability}
+                    </div>
 
-                    </strong>
-
-                </div>
-
-            `;
+                `;
 
             }
 
