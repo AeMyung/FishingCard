@@ -92,6 +92,24 @@ body {
 
 }
 
+.menuBtn:disabled {
+
+    opacity: 0.45;
+
+    filter: grayscale(1);
+
+    cursor: not-allowed;
+
+    transform: none;
+
+}
+
+.menuBtn:disabled:hover {
+
+    transform: none;
+
+}
+
 #miniGame {
 
     display: none;
@@ -547,5 +565,16 @@ body {
     flex-direction: column;
 
     gap: 8px;
+
+}
+
+#catchCount {
+
+    margin-top: 10px;
+
+    font-size: 24px;
+    font-weight: bold;
+
+    color: white;
 
 }

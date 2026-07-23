@@ -42,6 +42,8 @@ const rodList = document.getElementById("rodList");
 const baitList = document.getElementById("baitList");
 const toolApplyBtn = document.getElementById("toolApplyBtn");
 const toolCancelBtn = document.getElementById("toolCancelBtn");
+const shopBtn = document.getElementById("shopBtn");
+const catchCountText = document.getElementById("catchCount");
 
 
 // 실제 사용 중인 장비
@@ -63,6 +65,11 @@ let fishingItems = [];
 
 let rodListOpen = false;
 let baitListOpen = false;
+let autoCatchTimer = null;
+
+let rodBroken = false;
+let currentRodEffect = null;
+let currentBaitEffect = null;
 
 inventoryBtn.onclick = () => {
 
@@ -147,6 +154,13 @@ function stopFishing() {
     clearTimeout(fishingTimer);
     clearTimeout(failTimer);
 
+    clearTimeout(
+        autoCatchTimer
+    );
+
+    autoCatchTimer =
+        null;
+
     miniGame.style.display = "none";
     message.style.display = "none";
 
@@ -154,15 +168,53 @@ function stopFishing() {
 
     fishBtn.innerHTML = "🎣 낚시하기";
 
+    setFishingMenuDisabled(false);
+
 }
 
 // ======================
 // 미니게임 시작
 // ======================
 
-function startMiniGame() {
+async function startMiniGame() {
 
-    miniGame.style.display = "block";
+    const success =
+        await consumeFishingTools();
+
+
+    if (!success) {
+
+        stopFishing();
+
+        return;
+
+    }
+
+
+    // ======================
+    // 자동 낚싯대
+    // ======================
+
+    if (
+        currentRodEffect &&
+        currentRodEffect.type ===
+        EffectType.AUTO
+    ) {
+
+        await successFishing();
+
+        return;
+
+    }
+
+
+    // ======================
+    // 일반 미니게임
+    // ======================
+
+    miniGame.style.display =
+        "block";
+
 
     failTimer =
         setTimeout(
@@ -192,16 +244,131 @@ miniGame.onclick = () => {
 
 async function successFishing() {
 
-    const fish = randomFish(locationId);
+    const fish =
+        randomFish(locationId);
 
-    await addFish(fish.id);
 
-    catchPopup.style.display = "block";
+    // 기본 1마리
+    let catchCount = 1;
 
-    catchCard.src = "../images/" + fish.id + ".png";
+
+    // ======================
+    // DOUBLE 효과
+    // ======================
+
+    if (
+        currentRodEffect &&
+        currentRodEffect.type ===
+        EffectType.DOUBLE
+    ) {
+
+        const chance =
+            currentRodEffect.value;
+
+
+        if (
+            Math.random() * 100 <
+            chance
+        ) {
+
+            catchCount = 2;
+
+        }
+
+    }
+
+
+    // ======================
+    // 물고기 지급
+    // ======================
+
+    for (
+        let i = 0;
+        i < catchCount;
+        i++
+    ) {
+
+        await addFish(
+            fish.id
+        );
+
+    }
+
+
+    // ======================
+    // 획득 팝업
+    // ======================
+
+    catchPopup.style.display =
+        "block";
+
+    catchCard.src =
+        "../images/" +
+        fish.id +
+        ".png";
+
+
+    // 2배 획득 표시
+    if (catchCount === 2) {
+
+        catchCountText.innerHTML =
+            "x2";
+
+    } else {
+
+        catchCountText.innerHTML =
+            "";
+
+    }
+
 
     isFishing = false;
-    fishBtn.innerHTML = "🎣 낚시하기";
+
+    fishBtn.innerHTML =
+        "🎣 낚시하기";
+
+    // ======================
+    // 자동 낚싯대
+    // 획득창 3초 후 자동 진행
+    // ======================
+
+    if (
+        currentRodEffect &&
+        currentRodEffect.type === EffectType.AUTO
+    ) {
+
+        clearTimeout(autoCatchTimer);
+
+        autoCatchTimer =
+            setTimeout(() => {
+
+                catchPopup.style.display =
+                    "none";
+
+
+                // 마지막 내구도로
+                // 낚싯대가 부러진 경우
+                if (rodBroken) {
+
+                    rodBroken =
+                        false;
+
+                    alert(
+                        "낚싯대가 부러졌습니다.\n다른 낚싯대를 사용해주세요."
+                    );
+
+                    stopFishing();
+
+                    return;
+                }
+
+
+                // 다음 낚시 자동 시작
+                startFishing();
+
+            }, 3000);
+
+    }
 
 }
 
@@ -217,6 +384,18 @@ function failFishing() {
 
     message.innerHTML = "❌<br><br>물고기를 놓쳤습니다.";
 
+    if (rodBroken) {
+
+        rodBroken = false;
+
+        alert(
+            "물고기가 도망갔고 낚싯대가 부러졌습니다.\n다른 낚싯대를 사용해주세요."
+        );
+
+    }
+
+    stopFishing();
+
     isFishing = false;
     fishBtn.innerHTML = "🎣 낚시하기";
 
@@ -230,21 +409,111 @@ function failFishing() {
 
 closePopup.onclick = () => {
 
-    catchPopup.style.display = "none";
+    clearTimeout(
+        autoCatchTimer
+    );
+
+    autoCatchTimer =
+        null;
+
+    catchPopup.style.display =
+        "none";
+
+
+    // 낚싯대가 이번 낚시에서 부러짐
+    if (rodBroken) {
+
+        rodBroken = false;
+
+        alert(
+            "낚싯대가 부러졌습니다.\n다른 낚싯대를 사용해주세요."
+        );
+
+        stopFishing();
+
+        return;
+    }
+
 
     startFishing();
-
 };
 
 function startFishing() {
 
+    if (!selectedRod) {
+
+        alert(
+            "장착된 낚시대가 없습니다. 낚시도구에서 낚싯대를 장착해주세요."
+        );
+
+        return;
+    }
+
+    // 다른 메뉴 잠금
+    setFishingMenuDisabled(true);
+
+
+    // ======================
+    // 이번 낚시에 사용할 효과 저장
+    // ======================
+
+    const rodData =
+        RodData.find(
+            rod =>
+                rod.id === selectedRod.item_id
+        );
+
+    const baitData =
+        selectedBait
+            ? BaitData.find(
+                bait =>
+                    bait.id === selectedBait.item_id
+            )
+            : null;
+
+
+    currentRodEffect =
+        rodData
+            ? { ...rodData.effect }
+            : null;
+
+    currentBaitEffect =
+        baitData
+            ? { ...baitData.effect }
+            : null;
+
+
     isFishing = true;
 
-    fishBtn.innerHTML = "❌ 낚시 중단";
+    fishBtn.innerHTML =
+        "❌ 낚시 중단";
 
-    message.style.display = "none";
+    message.style.display =
+        "none";
 
-    const wait = 3000 + Math.random() * 5000;
+
+    // 기본 입질 시간
+    let wait =
+        3000 +
+        Math.random() * 5000;
+
+
+    // ======================
+    // TIME 효과
+    // ======================
+
+    if (
+        currentRodEffect &&
+        currentRodEffect.type ===
+        EffectType.TIME
+    ) {
+
+        wait *=
+            1 -
+            currentRodEffect.value / 100;
+
+    }
+
 
     fishingTimer =
         setTimeout(
@@ -299,6 +568,109 @@ async function addFish(fishId) {
         }
 
     }
+
+}
+
+// ======================
+// 낚시도구 소모
+// ======================
+
+async function consumeFishingTools() {
+
+    const usedRod =
+        selectedRod;
+
+    const usedBait =
+        selectedBait;
+
+
+    const { data, error } =
+        await sb.rpc(
+            "consume_fishing_tools",
+            {
+                p_member_code:
+                    memberCode,
+
+                p_rod_id:
+                    usedRod.id,
+
+                p_bait_id:
+                    usedBait
+                        ? usedBait.id
+                        : null
+            }
+        );
+
+
+    if (error) {
+
+        console.error(error);
+
+        alert(
+            "낚시도구 소모 중 오류가 발생했습니다."
+        );
+
+        return false;
+
+    }
+
+
+    // ======================
+    // 낚싯대 상태 갱신
+    // ======================
+
+    if (data.rod_deleted) {
+
+        fishingItems =
+            fishingItems.filter(
+                item =>
+                    item.id !== usedRod.id
+            );
+
+        selectedRod = null;
+
+        rodBroken = true;
+
+    }
+
+    else {
+
+        usedRod.durability =
+            data.rod_durability;
+
+    }
+
+
+    // ======================
+    // 미끼 상태 갱신
+    // ======================
+
+    if (usedBait) {
+
+        if (data.bait_deleted) {
+
+            fishingItems =
+                fishingItems.filter(
+                    item =>
+                        item.id !== usedBait.id
+                );
+
+            selectedBait =
+                null;
+
+        }
+
+        else {
+
+            usedBait.count =
+                data.bait_count;
+
+        }
+
+    }
+
+
+    return true;
 
 }
 
@@ -928,8 +1300,12 @@ toolBtn.onclick =
             return;
 
 
-        // 현재 사용 중인 장비를
-        // 팝업 임시 선택값으로 복사
+        // DB의 equipped 상태로 복원
+        restoreEquippedFishingItems();
+
+
+        // 현재 장착 장비를
+        // 임시 선택값으로 복사
 
         tempRod =
             selectedRod;
@@ -937,8 +1313,12 @@ toolBtn.onclick =
         tempBait =
             selectedBait;
 
-        rodListOpen = false;
-        baitListOpen = false;
+
+        rodListOpen =
+            false;
+
+        baitListOpen =
+            false;
 
 
         renderRodList();
@@ -968,32 +1348,117 @@ toolCancelBtn.onclick = () => {
 // 적용
 // ======================
 
-toolApplyBtn.onclick = () => {
+toolApplyBtn.onclick =
+    async () => {
 
-    // 낚싯대는 필수
+        // ======================
+        // 낚싯대 필수
+        // ======================
 
-    if (!tempRod) {
+        if (!tempRod) {
 
-        alert(
-            "사용할 낚싯대를 선택해주세요."
+            alert(
+                "사용할 낚싯대를 선택해주세요."
+            );
+
+            return;
+
+        }
+
+
+        // 중복 클릭 방지
+        toolApplyBtn.disabled = true;
+
+
+        // ======================
+        // Supabase 장착 저장
+        // ======================
+
+        const { error } =
+            await sb.rpc(
+                "equip_fishing_tools",
+                {
+                    p_member_code:
+                        memberCode,
+
+                    p_rod_id:
+                        tempRod.id,
+
+                    p_bait_id:
+                        tempBait
+                            ? tempBait.id
+                            : null
+                }
+            );
+
+
+        if (error) {
+
+            console.error(error);
+
+            alert(
+                "낚시도구 적용 중 오류가 발생했습니다."
+            );
+
+            toolApplyBtn.disabled = false;
+
+            return;
+
+        }
+
+
+        // ======================
+        // 현재 JS 상태 갱신
+        // ======================
+
+        fishingItems.forEach(
+            item => {
+
+                if (
+                    item.item_type === "rod" ||
+                    item.item_type === "bait"
+                ) {
+
+                    item.equipped =
+                        false;
+
+                }
+
+            }
         );
 
-        return;
 
-    }
-
-
-    selectedRod =
-        tempRod;
-
-    selectedBait =
-        tempBait;
+        tempRod.equipped =
+            true;
 
 
-    toolPopup.style.display =
-        "none";
+        if (tempBait) {
 
-};
+            tempBait.equipped =
+                true;
+
+        }
+
+
+        selectedRod =
+            tempRod;
+
+        selectedBait =
+            tempBait;
+
+
+        // ======================
+        // 창 닫기
+        // ======================
+
+        toolPopup.style.display =
+            "none";
+
+
+        toolApplyBtn.disabled =
+            false;
+
+    };
 
 window.addEventListener("pageshow", () => {
 
@@ -1008,3 +1473,71 @@ window.addEventListener("pageshow", () => {
     catchPopup.style.display = "none";
 
 });
+
+function restoreEquippedFishingItems() {
+
+    // ======================
+    // 장착 낚싯대
+    // ======================
+
+    selectedRod =
+        fishingItems.find(
+            item =>
+                item.item_type === "rod" &&
+                item.equipped === true
+        ) || null;
+
+
+    // ======================
+    // 장착 미끼
+    // ======================
+
+    selectedBait =
+        fishingItems.find(
+            item =>
+                item.item_type === "bait" &&
+                item.equipped === true &&
+                item.count > 0
+        ) || null;
+
+}
+
+// ======================
+// 페이지 진입 시 장착 장비 복원
+// ======================
+
+async function initializeFishingTools() {
+
+    const success =
+        await loadFishingItems();
+
+
+    if (!success)
+        return;
+
+
+    restoreEquippedFishingItems();
+
+}
+
+initializeFishingTools();
+
+shopBtn.onclick = () => {
+
+    window.location.href =
+        "../shop/shop.html";
+
+};
+
+function setFishingMenuDisabled(disabled) {
+
+    toolBtn.disabled =
+        disabled;
+
+    inventoryBtn.disabled =
+        disabled;
+
+    shopBtn.disabled =
+        disabled;
+
+}
